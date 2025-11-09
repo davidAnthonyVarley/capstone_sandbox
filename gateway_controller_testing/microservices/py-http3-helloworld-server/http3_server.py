@@ -54,7 +54,7 @@ class Http3ServerProtocol(QuicConnectionProtocol):
         # 2. Send response body (Data Frame)
         self.h3.send_data(
             stream_id=stream_id,
-            data=b"Hello HTTP/3 World!\n",
+            data=b"HTTP/3 Hello World!\n",
             end_stream=True # Set end_stream=True to close the stream after the body
         )
         

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-app
+  name: py-http1p1-helloworld-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-app
+      app: py-http1p1-helloworld-server
   template:
     metadata:
       labels:
-        app: hello-app
+        app: py-http1p1-helloworld-server
     spec:
       containers:
-      - name: hello-app
-        image: davidanthonyvarley/fyp-hello-service:latest
+      - name: py-http1p1-helloworld-server
+        image: davidanthonyvarley/py-http1p1-helloworld-server:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 30080
