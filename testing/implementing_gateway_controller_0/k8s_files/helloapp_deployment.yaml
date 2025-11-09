@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello-app
-        image: docker.io/davidanthonyvarley/fyp-hello-service:latest
-        imagePullPolicy: Always
+        image: davidanthonyvarley/fyp-hello-service:latest
+        imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 30080
