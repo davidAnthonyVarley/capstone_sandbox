@@ -13,7 +13,7 @@ RUN apt-get update && \
 COPY . /app
 
 # Expose HTTP/3 port
-EXPOSE 4433
+EXPOSE 34433
 
 # Default command
 CMD ["python3", "http3_server.py"]

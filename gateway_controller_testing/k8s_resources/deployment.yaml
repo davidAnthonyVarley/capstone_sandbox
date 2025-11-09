@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: py-http1p1-helloworld-server
+  name: MICROSERVICE_NAME_PLACEHOLDER
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: py-http1p1-helloworld-server
+      app: MICROSERVICE_NAME_PLACEHOLDER
   template:
     metadata:
       labels:
-        app: py-http1p1-helloworld-server
+        app: MICROSERVICE_NAME_PLACEHOLDER
     spec:
       containers:
-      - name: py-http1p1-helloworld-server
-        image: davidanthonyvarley/py-http1p1-helloworld-server:latest
+      - name: MICROSERVICE_NAME_PLACEHOLDER
+        image: davidanthonyvarley/MICROSERVICE_NAME_PLACEHOLDER:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 30080

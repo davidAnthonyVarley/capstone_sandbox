@@ -29,9 +29,11 @@ class H3ClientProtocol:
     # Method to send the request
     def send_request(self):
         # allocate stream
+        print("allocating stream")
         stream_id = self.quic.get_next_available_stream_id(is_unidirectional=False)
 
         # send GET request
+        print("sending get request")
         self.h3.send_headers(
             stream_id=stream_id,
             headers=[
@@ -50,7 +52,7 @@ class H3ClientProtocol:
 
 
 # --- Main Fetch Function ---
-async def fetch():
+async def fetch(ip, port):
     configuration = QuicConfiguration(
         is_client=True,
         alpn_protocols=H3_ALPN,
@@ -58,7 +60,8 @@ async def fetch():
     )
 
     # 'connect' returns an AioQuicConnectionProtocol instance
-    async with connect("127.0.0.1", 4433, configuration=configuration) as protocol:
+    print(f"before trrying to connect to server at {ip}:{port}")
+    async with connect(ip, port, configuration=configuration) as protocol:
         
         # 1. Instantiate the H3 client with the QUIC connection
         client = H3ClientProtocol(protocol._quic)
@@ -75,4 +78,6 @@ async def fetch():
         
         # The 'async with' block will automatically close the connection upon exit
 
-asyncio.run(fetch())
+#asyncio.run(fetch("127.0.0.1",65297))
+#http://127.0.0.1:63813/
+asyncio.run(fetch("127.0.0.1", 34433))

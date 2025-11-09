@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: py-http1p1-helloworld-server
+  name: MICROSERVICE_NAME_PLACEHOLDER
 spec:
   type: NodePort
   selector:
-    app: py-http1p1-helloworld-server
+    app: MICROSERVICE_NAME_PLACEHOLDER
   ports:
   - port: 30080       # cluster port (can stay as is)
     targetPort: 30080  # container port in pod

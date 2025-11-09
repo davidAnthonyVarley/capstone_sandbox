@@ -79,11 +79,13 @@ async def main():
         print("Please ensure you have a valid certificate chain for the server.")
         return
 
-    print("HTTP/3 server running on https://127.0.0.1:4433")
+    host="0.0.0.0"
+    port=34433
+    print(f"HTTP/3 server running on https://{host}:{port}")
 
     await serve(
-        host="127.0.0.1",
-        port=4433,
+        host=host,
+        port=port,
         configuration=configuration,
         create_protocol=Http3ServerProtocol
     )
