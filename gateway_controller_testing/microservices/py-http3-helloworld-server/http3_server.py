@@ -1,4 +1,7 @@
 import asyncio
+import sys
+import argparse
+
 from aioquic.asyncio import serve
 from aioquic.quic.configuration import QuicConfiguration
 from aioquic.asyncio.protocol import QuicConnectionProtocol
@@ -61,39 +64,74 @@ class Http3ServerProtocol(QuicConnectionProtocol):
         # 3. Flush the H3 data to the underlying QUIC connection
         #self.quic.transmit()
 
+def parse_arguments():
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description="A simple HTTP/3 server")
+    
+    # Define --cert and --key arguments, which will be passed from K8s
+    parser.add_argument(
+        "--cert",
+        type=str,
+        required=True,
+        help="Path to the TLS certificate file (e.g., /certs/tls.crt)"
+    )
+    parser.add_argument(
+        "--key",
+        type=str,
+        required=True,
+        help="Path to the TLS private key file (e.g., /certs/tls.key)"
+    )
+    # Add other arguments if necessary (like --host or --port)
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=30433,
+        help="Port to listen on"
+    )
+
+    # Parse args, excluding the script name itself (sys.argv[0])
+    # Note: When run via K8s args, you may receive the script name, but argparse handles this well.
+    return parser.parse_args(sys.argv[1:])
+
+
 async def main():
-    # It's important to use a good certificate and private key here
-    # Use your existing paths if they are valid
+    # 1. Parse arguments passed from the Kubernetes Deployment YAML
+    args = parse_arguments()
+    
     configuration = QuicConfiguration(
         is_client=False,
-        # Use a list of protocols for better compatibility
         alpn_protocols=H3_ALPN_LIST, 
     )
     
-    # NOTE: You MUST replace these with valid paths to your certificate and key
-    # Ensure 'certs/pk_cert.pem' and 'certs/private_key.pem' exist and are correct
+    # 2. Use the paths provided by the command-line arguments
+    cert_path = args.cert
+    key_path = args.key
+
     try:
-        configuration.load_cert_chain("certs/pk_cert.pem", "certs/private_key.pem")
-    except FileNotFoundError as e:
-        print(f"FATAL ERROR: Certificate or key file not found: {e.filename}")
-        print("Please ensure you have a valid certificate chain for the server.")
+        # Load the certificate chain using the provided paths
+        configuration.load_cert_chain(cert_path, key_path)
+    except FileNotFoundError:
+        # FileNotFoundError directly includes the name of the file it couldn't find
+        print(f"FATAL ERROR: Certificate or key file not found at '{cert_path}' or '{key_path}'")
+        print("Please ensure the Secret volume mount is correct in the Kubernetes deployment.")
         return
 
-    host="0.0.0.0"
-    port=34433
+    host = "0.0.0.0"
+    port = args.port
     print(f"HTTP/3 server running on https://{host}:{port}")
 
     await serve(
         host=host,
         port=port,
         configuration=configuration,
-        create_protocol=Http3ServerProtocol
+        create_protocol=Http3ServerProtocol # Ensure this class is correctly defined/imported
     )
 
     await asyncio.Future() # run forever
 
 if __name__ == "__main__":
     try:
+        # Ensure sys.argv is properly cleaned up before running asyncio.run
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\nServer shutting down.")

@@ -3,11 +3,25 @@ kind: Gateway
 metadata:
   name: MICROSERVICE_NAME_PLACEHOLDER-gateway
 spec:
-  gatewayClassName: envoy
+  gatewayClassName: nginx
   listeners:
-  - name: PROTOCOL_PLACEHOLDER
-    port: PORT_PLACEHOLDER
-    protocol: PROTOCOL_PLACEHOLDER
+  - name: http
+    port: 30080
+    protocol: HTTP
     hostname: "MICROSERVICE_NAME_PLACEHOLDER.local"
+    
+  - name: https
+    port: 30443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      #referencing the secret
+      certificateRefs:
+      - kind: Secret
+        name: http3-tls-cert
+  
+  - name: http3-quic #this will set up a udp listener
+    port: 30443
+    protocol: UDP
 
     

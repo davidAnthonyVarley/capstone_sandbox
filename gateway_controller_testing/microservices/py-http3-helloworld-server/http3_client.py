@@ -80,4 +80,6 @@ async def fetch(ip, port):
 
 #asyncio.run(fetch("127.0.0.1",65297))
 #http://127.0.0.1:63813/
-asyncio.run(fetch("127.0.0.1", 34433))
+
+#asyncio.run(fetch("127.0.0.1", 30433))
+asyncio.run(fetch("192.168.49.2", 30433))

@@ -11,10 +11,27 @@ spec:
     metadata:
       labels:
         app: MICROSERVICE_NAME_PLACEHOLDER
+        
     spec:
+      volumes:
+        - name: cert-volume
+          secret:
+            secretName: http3-tls-cert
       containers:
       - name: MICROSERVICE_NAME_PLACEHOLDER
         image: davidanthonyvarley/MICROSERVICE_NAME_PLACEHOLDER:latest
+
+        command: ["python3"]
+        args:
+          - http3_server.py
+          - --cert=/certs/tls.crt
+          - --key=/certs/tls.key
+        volumeMounts:
+          - name: cert-volume
+            mountPath: /certs
+
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: PORT_PLACEHOLDER
+
+      

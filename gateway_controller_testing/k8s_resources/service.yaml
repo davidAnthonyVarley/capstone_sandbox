@@ -7,6 +7,14 @@ spec:
   selector:
     app: MICROSERVICE_NAME_PLACEHOLDER
   ports:
-  - port: PORT_PLACEHOLDER      
+  - name: https-tcp
+    protocol: TCP
+    port: PORT_PLACEHOLDER      
     targetPort: PORT_PLACEHOLDER  
-    NodePort: PORT_PLACEHOLDER
+    nodePort: PORT_PLACEHOLDER
+  
+  - name: https-quic
+    protocol: UDP
+    port: PORT_PLACEHOLDER      
+    targetPort: PORT_PLACEHOLDER  
+    nodePort: PORT_PLACEHOLDER

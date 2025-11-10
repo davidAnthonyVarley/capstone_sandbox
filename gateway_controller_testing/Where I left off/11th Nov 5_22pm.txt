@@ -1,0 +1,8 @@
+Current problem:
+    I can't access the HTTP3 hello world server in K8s
+    
+    I can access the HTTP3 server when run locally, and I also can also access it no bother when it runs on a docker container running locally
+    
+    But when I define it in a pod template as part of a deployment, it won't accept the connection. The HTTP1.1 server worked fine. The container port, cluster port and external port are all the same, so I don't think there will be an issue there
+
+    I have provided the TLS secrets to the HTTP3 server via a mounted volume. I think that works, however, I should investigate that a bit more when I come back next.
