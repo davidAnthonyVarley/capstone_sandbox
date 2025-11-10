@@ -3,11 +3,11 @@ kind: Gateway
 metadata:
   name: MICROSERVICE_NAME_PLACEHOLDER-gateway
 spec:
-  gatewayClassName: nginx
+  gatewayClassName: envoy
   listeners:
-  - name: http
-    port: 80
-    protocol: HTTP
+  - name: PROTOCOL_PLACEHOLDER
+    port: PORT_PLACEHOLDER
+    protocol: PROTOCOL_PLACEHOLDER
     hostname: "MICROSERVICE_NAME_PLACEHOLDER.local"
 
     

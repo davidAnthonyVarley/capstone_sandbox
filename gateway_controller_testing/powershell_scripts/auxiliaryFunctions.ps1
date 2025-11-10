@@ -24,7 +24,7 @@ function getResources {
 }
 
 function createMinikubeTunnel {
-    kubectl wait --for=condition=ready pod -l app=$microservice_name --timeout=20s
+    kubectl wait --for=condition=ready pod -l app=$microservice_name --timeout=30s
     minikube service $microservice_name;
 }
 

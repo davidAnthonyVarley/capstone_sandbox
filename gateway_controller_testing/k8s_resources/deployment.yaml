@@ -17,4 +17,4 @@ spec:
         image: davidanthonyvarley/MICROSERVICE_NAME_PLACEHOLDER:latest
         imagePullPolicy: IfNotPresent
         ports:
-          - containerPort: 30080
+          - containerPort: PORT_PLACEHOLDER

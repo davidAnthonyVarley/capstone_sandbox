@@ -7,5 +7,6 @@ spec:
   selector:
     app: MICROSERVICE_NAME_PLACEHOLDER
   ports:
-  - port: 30080       # cluster port (can stay as is)
-    targetPort: 30080  # container port in pod
+  - port: PORT_PLACEHOLDER      
+    targetPort: PORT_PLACEHOLDER  
+    NodePort: PORT_PLACEHOLDER
