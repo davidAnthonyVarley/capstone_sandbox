@@ -23,7 +23,7 @@ spec:
 
         command: ["python3"]
         args:
-          - http3_server.py
+          - MICROSERVICE_NAME_PLACEHOLDER.py
           - --cert=/certs/tls.crt
           - --key=/certs/tls.key
         volumeMounts:

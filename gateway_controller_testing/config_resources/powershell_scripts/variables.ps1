@@ -1,9 +1,9 @@
-#$microservice_name = "py-http1p1-helloworld-server"
+#$microservice_name = "py-http-1p1-helloworld-server"
 #$port = 30080
-#$protocol = "HTTP"
-$microservice_name = "py-http3-helloworld-server"
-$port = 30433;
-$protocol = "HTTPS"
+$microservice_name = "py-https-1p1-helloworld-server"
+$port = 30443
+#$microservice_name = "py-http3-helloworld-server"
+#$port = 30433;
 
 #when we want to create a certain microservice with a partiuclar protocol, the placeholders/parameters listed below will be replaced with those actually values 
 $microservice_placeholder = "MICROSERVICE_NAME_PLACEHOLDER"

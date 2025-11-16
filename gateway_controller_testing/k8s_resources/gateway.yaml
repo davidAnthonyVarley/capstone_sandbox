@@ -6,7 +6,7 @@ spec:
   gatewayClassName: nginx
   listeners:
   - name: http
-    port: 30080
+    port: PORT_PLACEHOLDER
     protocol: HTTP
     hostname: "MICROSERVICE_NAME_PLACEHOLDER.local"
     

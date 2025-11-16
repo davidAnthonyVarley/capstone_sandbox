@@ -16,4 +16,4 @@ COPY . /app
 EXPOSE 30433
 
 # Default command
-CMD ["python3", "http3_server.py"]
+CMD ["python3", "py-http3-helloworld-server.py"]

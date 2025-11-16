@@ -1,0 +1,6 @@
+1. Start Docker Desktop on your windows pc to get the docker engine running
+
+2. open a powershell terminal, enter `minikube start`
+
+3. execute .\run_k8s_cluster.ps1
+

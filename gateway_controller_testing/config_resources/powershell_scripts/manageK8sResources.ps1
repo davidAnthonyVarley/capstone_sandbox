@@ -9,7 +9,7 @@ function printStars {
 }
 function createHTTPSSecret {
     write-host "Create new HTTPS Secret" -Foreground Cyan
-    kubectl create secret tls $https_k8s_secret_name --cert=$config_resources_folder\certs\pk_cert.pem --key=$config_resources_folder\certs\private_key.pem --namespace default;
+    kubectl create secret tls $https_k8s_secret_name --cert=$config_resources_folder\certs\cert.pem --key=$config_resources_folder\certs\key.pem --namespace default;
     printStars;
 }
 function deleteHTTPSSecret {
