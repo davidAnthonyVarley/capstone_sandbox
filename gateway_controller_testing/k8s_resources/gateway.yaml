@@ -11,7 +11,7 @@ spec:
     hostname: "MICROSERVICE_NAME_PLACEHOLDER.local"
     
   - name: https
-    port: 30443
+    port: PORT_PLACEHOLDER
     protocol: HTTPS
     tls:
       mode: Terminate
@@ -21,7 +21,7 @@ spec:
         name: http3-tls-cert
   
   - name: http3-quic #this will set up a udp listener
-    port: 30443
+    port: PORT_PLACEHOLDER
     protocol: UDP
 
     
