@@ -10,7 +10,7 @@ RUN apt-get update && \
     python -m pip install --upgrade pip aioquic
 
 # Copy application code
-COPY . /app
+COPY . .
 
 # Expose HTTP/3 port
 EXPOSE PORT_PLACEHOLDER

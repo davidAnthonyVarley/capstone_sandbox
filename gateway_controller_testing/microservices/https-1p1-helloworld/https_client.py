@@ -10,7 +10,7 @@ port = "30443"
 
 
 url = f"https://{host}:{port}/"
-path_to_certs = "C:\\Users\\david\\capstone_sandbox\\gateway_controller_testing\\config_resources\\certs"
+path_to_certs = "C:\\Users\\david\\capstone_sandbox\\gateway_controller_testing\\certs"
 cert = path_to_certs + "\\cert.pem"
 
 response = requests.get(url, verify=cert) 

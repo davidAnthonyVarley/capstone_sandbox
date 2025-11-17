@@ -2,25 +2,20 @@ $project_root = "C:\Users\david\capstone_sandbox\gateway_controller_testing"
 $powershell_scripts_path = $project_root + "\powershell_scripts";
 . $powershell_scripts_path\manageK8sResources.ps1;
 . $powershell_scripts_path\variables.ps1;
+. $powershell_scripts_path\constants.ps1;
 
 function buildDockerImage {
-    Write-Host "Replace"
-    Write-Host $stringToRemove
-    Write-Host "in .yaml files and Dockerfile with"
-    Write-Host $stringToInsert
-    Write-Host "in"
-    Write-Host $dockerfile_path;
 
-    edit_file -path $dockerfile_path -stringToRemove $microservice_placeholder -stringToInsert $microservice_name;
+    edit_file -path $dockerfile_path -stringToRemove $microservice_placeholder -stringToInsert $microservice_name  -muteOutput $true;
     Write-Host "";
-    edit_file -path $dockerfile_path -stringToRemove $port_placeholder -stringToInsert $port;
+    edit_file -path $dockerfile_path -stringToRemove $port_placeholder -stringToInsert $port  -muteOutput $true;
 
     docker build -t $docker_image $dockerfile_parent_folder_path;
     printStars;
 
-    edit_file -path $dockerfile_path -stringToRemove $microservice_name -stringToInsert $microservice_placeholder;
+    edit_file -path $dockerfile_path -stringToRemove $microservice_name -stringToInsert $microservice_placeholder  -muteOutput $true;
     Write-Host "";
-    edit_file -path $dockerfile_path -stringToRemove $port -stringToInsert $port_placeholder;
+    edit_file -path $dockerfile_path -stringToRemove $port -stringToInsert $port_placeholder  -muteOutput $true;
 }
 function getResources {
     write-host "Display Pods"  -Foreground Cyan
@@ -39,8 +34,14 @@ function createMinikubeTunnel {
     kubectl wait --for=condition=ready pod -l app=$microservice_name --timeout=30s
 
     write-host "**"
-    write-host "Access the app on https://localhost:$port"
+    write-host "Access the app on" 
+    Write-Host "        http://localhost:$port" -ForegroundColor Green -NoNewline
+    Write-Host " (if HTTP microservice)"
+    write-host "or"
+    write-host "        https://localhost:$port" -ForegroundColor Green -NoNewline
+    Write-Host " (if HTTPS microservice)"
     write-host "**"
+
     kubectl port-forward "service/$microservice_name" ("$port"+":"+"$port");
     #$minikubeURLs = minikube service $microservice_name --url;
 #

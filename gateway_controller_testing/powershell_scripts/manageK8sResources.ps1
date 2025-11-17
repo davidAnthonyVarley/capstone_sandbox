@@ -1,6 +1,7 @@
 $project_root = "C:\Users\david\capstone_sandbox\gateway_controller_testing"
 $powershell_scripts_path = $project_root + "\powershell_scripts";
 . $powershell_scripts_path\variables.ps1;
+. $powershell_scripts_path\constants.ps1;
 
 function printStars {
     write-host "*"
@@ -9,7 +10,7 @@ function printStars {
 }
 function createHTTPSSecret {
     write-host "Create new HTTPS Secret" -Foreground Cyan
-    kubectl create secret tls $https_k8s_secret_name --cert=$config_resources_folder\certs\cert.pem --key=$config_resources_folder\certs\key.pem --namespace default;
+    kubectl create secret tls $https_k8s_secret_name --cert=$project_root\certs\cert.pem --key=$project_root\certs\key.pem --namespace default;
     printStars;
 }
 function deleteHTTPSSecret {
