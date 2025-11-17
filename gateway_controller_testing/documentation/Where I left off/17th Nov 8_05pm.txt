@@ -1,0 +1,8 @@
+Current problem: Exposing the UDP port on localhost
+
+The port forwarding worked for HTTP 1.1 and 2, but not for UDP
+
+Therefore, while my app is running inside the pod (i think, there hasn't been any crashing), I can't query it like I did before with the lower version of HTTP
+
+So right now, I need to find a way to just hit a UDP port from the cluster that is exposed to my local machine
+
