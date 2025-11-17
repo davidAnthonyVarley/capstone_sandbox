@@ -6,7 +6,7 @@ import h2.events
 
 # --- Configuration ---
 SERVER_HOST = 'localhost'
-SERVER_PORT = 30443
+SERVER_PORT = 30002
 
 project_root = "C:\\Users\\david\\capstone_sandbox\\gateway_controller_testing"
 certs_folder = project_root + "\\certs"

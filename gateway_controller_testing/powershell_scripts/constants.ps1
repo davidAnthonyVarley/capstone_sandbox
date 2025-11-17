@@ -2,6 +2,23 @@ $project_root = "C:\Users\david\capstone_sandbox\gateway_controller_testing";
 $powershell_scripts_path = $project_root + "\powershell_scripts";
 . $powershell_scripts_path\variables;
 
+
+$port = -1;
+switch ($microservice_name) {
+    "http-1p1-helloworld" {
+        $port = 30000;
+    }
+    "https-1p1-helloworld" {
+        $port = 30001;
+    }
+    "https-2-helloworld" {
+        $port = 30002;
+    }
+    "https-3-helloworld" {
+        $port = 30003;
+    }
+}
+
 #when we want to create a certain microservice with a partiuclar protocol, the placeholders/parameters listed below will be replaced with those actually values 
 $microservice_placeholder = "MICROSERVICE_NAME_PLACEHOLDER"
 $port_placeholder = "PORT_PLACEHOLDER"

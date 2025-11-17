@@ -42,7 +42,7 @@ def hello():
 #cert = path_to_certs + "\\cert.pem"
 #key = path_to_certs + "\\key.pem"
 
-#for k8s
+#for k8s cluster
 args = parse_arguments()
 cert = args.cert
 key = args.key
