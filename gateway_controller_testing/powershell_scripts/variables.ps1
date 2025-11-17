@@ -1,8 +1,10 @@
-#$microservice_name = "py-http-1p1-helloworld-server"
+$project_root = "C:\Users\david\capstone_sandbox\gateway_controller_testing";
+
+#$microservice_name = "http-1p1-helloworld"
 #$port = 30080
-$microservice_name = "py-https-1p1-helloworld-server"
+$microservice_name = "https-1p1-helloworld"
 $port = 30443
-#$microservice_name = "py-http3-helloworld-server"
+#$microservice_name = "https-3-helloworld"
 #$port = 30433;
 
 #when we want to create a certain microservice with a partiuclar protocol, the placeholders/parameters listed below will be replaced with those actually values 
@@ -11,7 +13,8 @@ $port_placeholder = "PORT_PLACEHOLDER"
 $protocol_placeholder = "PROTOCOL_PLACEHOLDER"
 
 
-$dockerfile_path = ".\microservices\" + $microservice_name;
+$dockerfile_parent_folder_path = $project_root + "\microservices\" + $microservice_name;
+$dockerfile_path = $dockerfile_parent_folder_path + "\Dockerfile";
 $docker_image_name =  "davidanthonyvarley/" + $microservice_name;
 $docker_image_tag =  ":latest";
 $docker_image = $docker_image_name + $docker_image_tag;

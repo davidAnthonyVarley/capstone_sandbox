@@ -1,0 +1,10 @@
+I have created a HTTPS 1.1 server, which works locally and in k8s. that means i can run https_client in py-https-1p1 ms, and it gives me the expected response.
+
+An existing issue is: with `minikube service <service name>` I can't access the server through the minikube ip, even though both ips are created by the same single command at the same time.
+Need to fix this ahead before I start working on HTTP 3.
+
+I also need to get HTTP/2 and HTTPS/2 working. I will be analysing how CBR is done on HTTP/2
+
+Do I get HTTP/2 working before HTTP/3? I feel that I should get HTTP/3 working first, because I've got encryption sorted with HTTPS 1.1, so I need to be able to analyse the blockers with HTTP/3 immediately to direct my research
+
+Getting HTTP/2 MSs working is important, but not my next tasl

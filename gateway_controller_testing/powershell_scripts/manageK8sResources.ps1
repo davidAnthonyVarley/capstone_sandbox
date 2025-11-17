@@ -1,5 +1,5 @@
 $project_root = "C:\Users\david\capstone_sandbox\gateway_controller_testing"
-$powershell_scripts_path = $project_root + "\config_resources\powershell_scripts";
+$powershell_scripts_path = $project_root + "\powershell_scripts";
 . $powershell_scripts_path\variables.ps1;
 
 function printStars {
@@ -32,7 +32,7 @@ function deleteDeployments {
 }
 
 function createServices {
-    write-host "Create new Deployment with this name"  -Foreground Cyan
+    write-host "Create new Service with this name"  -Foreground Cyan
     kubectl apply -f $k8s_resources_folder\service.yaml -n default;
     printStars;
 }
