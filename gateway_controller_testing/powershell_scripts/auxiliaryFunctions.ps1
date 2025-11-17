@@ -31,7 +31,7 @@ function getResources {
 }
 
 function createMinikubeTunnel {
-    kubectl wait --for=condition=ready pod -l app=$microservice_name --timeout=30s
+    kubectl wait --for=condition=ready pod -l app=$microservice_name --timeout=45s
 
     write-host "**"
     write-host "Access the app on" 
@@ -42,7 +42,8 @@ function createMinikubeTunnel {
     Write-Host " (if HTTPS microservice)"
     write-host "**"
 
-    kubectl port-forward "service/$microservice_name" ("$port"+":"+"$port");
+    #kubectl port-forward "service/$microservice_name" ("$port"+":"+"$port");
+    minikube service $microservice_name;
     #$minikubeURLs = minikube service $microservice_name --url;
 #
     #write-host "//"

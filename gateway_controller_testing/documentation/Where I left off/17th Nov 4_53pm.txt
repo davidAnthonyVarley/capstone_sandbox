@@ -1,0 +1,12 @@
+I have gotten the http2 client and server working locally and in kubernetes. This has given me an insight into writing http servers with asyncio and i think it prepares me well for http 3
+
+The HTTP 1.1, HTTPS1.1, HTTP/2 servers can all be accessed tested through the browser, instead of needed a custom client. This link is made obvious to the user as soon as they execute .\run_k8s_cluster.ps1
+
+Next:
+    confirm that my http/3 server is working locally.
+    try put it on k8s.
+
+    if/when k8s working, try inspecting the nginx gateway under the hood to see if it is actually being accepted as HTTP/3. 
+
+    If it is, be ready to ask dr weber where I'm going wrong
+

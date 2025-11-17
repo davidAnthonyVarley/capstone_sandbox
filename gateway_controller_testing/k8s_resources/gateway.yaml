@@ -20,8 +20,8 @@ spec:
       - kind: Secret
         name: http3-tls-cert
   
-  - name: http3-quic #this will set up a udp listener
+  - name: http3-quic #this will set up a L4_PROTOCOL_PLACEHOLDER-muteOutput-muteOutput listener
     port: PORT_PLACEHOLDER
-    protocol: UDP
+    protocol: L4_PROTOCOL_PLACEHOLDER-muteOutput-muteOutput
 
     

@@ -16,22 +16,23 @@ buildDockerImage;
 Write-Host "3. Insert microservice name + port into K8s resource files" -ForegroundColor Yellow
 edit_yaml_files -stringToRemove $microservice_placeholder -stringToInsert $microservice_name -muteOutput $true;
 edit_yaml_files -stringToRemove $port_placeholder -stringToInsert $port -muteOutput $true;
-#edit_yaml_files -stringToRemove $protocol_placeholder -stringToInsert $protocol;
+edit_yaml_files -stringToRemove $L4_protocol_placeholder -stringToInsert $L4_protocol -muteOutput $true;;
 
 Write-Host "4 Delete any leftover K8s resources from previous tests" -ForegroundColor Yellow
 deleteAnyExistingResources;
 
-Write-Host "6 Create resources" -ForegroundColor Yellow
+Write-Host "5 Create resources" -ForegroundColor Yellow
 createK8sResource;
-Write-Host "7. Display resources" -ForegroundColor Yellow
+Write-Host "6. Display resources" -ForegroundColor Yellow
 getResources;
 
-Write-Host "8. Insert placeholders back into K8s resource files" -ForegroundColor Yellow
+Write-Host "7. Insert placeholders back into K8s resource files" -ForegroundColor Yellow
 edit_yaml_files -stringToRemove $microservice_name -stringToInsert $microservice_placeholder -muteOutput $true;
-edit_yaml_files -stringToRemove $port -stringToInsert $port_placeholder  -muteOutput $true;
-#edit_yaml_files -stringToRemove $protocol -stringToInsert $protocol_placeholder-muteOutput $true;
+edit_yaml_files -stringToRemove $port -stringToInsert $port_placeholder  -muteOutput $true; 
+edit_yaml_files -stringToRemove $L4_protocol -stringToInsert $L4_protocol_placeholder -muteOutput $true;
 
-Write-Host "9. Forward minikube cluster service to localhost:$port" -ForegroundColor Yellow
+
+Write-Host "8. Forward minikube cluster service to localhost:$port" -ForegroundColor Yellow
 createMinikubeTunnel;
 
 

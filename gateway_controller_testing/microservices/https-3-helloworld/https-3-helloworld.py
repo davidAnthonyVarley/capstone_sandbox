@@ -1,6 +1,7 @@
 import asyncio
 import sys
 import argparse
+import os
 
 from aioquic.asyncio import serve
 from aioquic.quic.configuration import QuicConfiguration
@@ -95,17 +96,29 @@ def parse_arguments():
 
 
 async def main():
-    # 1. Parse arguments passed from the Kubernetes Deployment YAML
-    args = parse_arguments()
+
+    
     
     configuration = QuicConfiguration(
         is_client=False,
         alpn_protocols=H3_ALPN_LIST, 
     )
     
-    # 2. Use the paths provided by the command-line arguments
+    # arguments for kubernetes deployment
+    host = "0.0.0.0"
+    args = parse_arguments()
+    port = args.port
     cert_path = args.cert
     key_path = args.key
+
+    #for local dev
+    #host = "localhost"
+    #port = 30003
+#
+    #project_root = "C:\\Users\\david\\capstone_sandbox\\gateway_controller_testing"
+    #certs_folder = os.path.join(project_root, "certs")
+    #key_path = os.path.join(certs_folder, 'key.pem')
+    #cert_path = os.path.join(certs_folder, 'cert.pem')
 
     try:
         # Load the certificate chain using the provided paths
@@ -116,8 +129,6 @@ async def main():
         print("Please ensure the Secret volume mount is correct in the Kubernetes deployment.")
         return
 
-    host = "0.0.0.0"
-    port = args.port
     print(f"HTTP/3 server running on https://{host}:{port}")
 
     await serve(
