@@ -16,7 +16,9 @@ buildDockerImage;
 Write-Host "3. Insert microservice name + port into K8s resource files" -ForegroundColor Yellow
 edit_yaml_files -stringToRemove $microservice_placeholder -stringToInsert $microservice_name -muteOutput $true;
 edit_yaml_files -stringToRemove $port_placeholder -stringToInsert $port -muteOutput $true;
-edit_yaml_files -stringToRemove $L4_protocol_placeholder -stringToInsert $L4_protocol -muteOutput $true;;
+
+write-host "the l4 protocol: ${L4_protocol}"
+edit_yaml_files -stringToRemove $L4_protocol_placeholder -stringToInsert $L4_protocol -muteOutput $true;
 
 Write-Host "4 Delete any leftover K8s resources from previous tests" -ForegroundColor Yellow
 deleteAnyExistingResources;

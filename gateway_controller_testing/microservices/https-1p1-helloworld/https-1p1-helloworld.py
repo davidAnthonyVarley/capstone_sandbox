@@ -23,7 +23,7 @@ def parse_arguments():
     parser.add_argument(
         "--port",
         type=int,
-        default=30433,
+        default=30001,
         help="Port to listen on"
     )
 
@@ -38,9 +38,9 @@ def hello():
     return "Hello world, from py HTTPS 1.1 server", 200
 
 #Local development
-#path_to_certs = "C:\\Users\\david\\capstone_sandbox\\gateway_controller_testing\\certs"
-#cert = path_to_certs + "\\cert.pem"
-#key = path_to_certs + "\\key.pem"
+path_to_certs = "C:\\Users\\david\\capstone_sandbox\\gateway_controller_testing\\certs"
+cert = path_to_certs + "\\cert.pem"
+key = path_to_certs + "\\key.pem"
 
 #for k8s cluster
 args = parse_arguments()
@@ -50,7 +50,7 @@ key = args.key
 
 app.run(
     host="0.0.0.0", 
-    port=30443,
+    port=30001,
     ssl_context=(cert, key)
-    )
+)
 

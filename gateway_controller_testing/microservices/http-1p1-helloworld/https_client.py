@@ -1,7 +1,7 @@
 import requests
 
-url = "https://localhost:3443/"
+url = "http://localhost:30080/"
 
-response = requests.get(url, verify="cert.pem")  # path to your self-signed cert
+response = requests.get(url) 
 print(response.status_code)
 print(response.text)

@@ -2,9 +2,9 @@ import requests
 
 #host = "192.168.49.2"
 #port = "30443"
-host = "minikube.local"
-port = "30443"
-#host = "localhost" #NOTE, this can't be 127.0.0.1 because the cert is only designed to accept connection from 1
+#host = "minikube.local"
+port = "30001"
+host = "localhost" #NOTE, this can't be 127.0.0.1 because the cert is only designed to accept connection from 1
 #port = "61449"
 
 
