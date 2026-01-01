@@ -15,7 +15,7 @@ switch ($microservice_name) {
         $port = 30002;
     }
     "https-3-helloworld" {
-        $port = 31003;
+        $port = 30003;
     }
 }
 

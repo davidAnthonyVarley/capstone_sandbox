@@ -1,0 +1,12 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: L4_PROTOCOL_PLACEHOLDERRoute
+metadata:
+  name: MICROSERVICE_NAME_PLACEHOLDER-uddp-route
+spec:
+  parentRefs:
+  - name: MICROSERVICE_NAME_PLACEHOLDER-gateway
+    sectionName: http3-quic
+  rules:
+  - backendRefs:
+    - name: MICROSERVICE_NAME_PLACEHOLDER
+      port: PORT_PLACEHOLDER

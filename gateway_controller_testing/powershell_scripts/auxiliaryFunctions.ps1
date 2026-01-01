@@ -42,10 +42,18 @@ function createMinikubeTunnel {
     Write-Host " (if HTTPS microservice)"
     write-host "**"
 
-    kubectl port-forward "service/$microservice_name" ("$port"+":"+"$port");
-    minikube service $microservice_name;
-    #$minikubeURLs = minikube service $microservice_name --url;
-#
+    #Write-Host "about to portforward for udp with command;"
+    kubectl wait --for=condition=Ready pod -l app=$microservice_name --timeout=30s
+    minikube service $microservice_name
+
+    #Write-Host "just tried to portforward for udp, did it work"
+    
+    #minikube service $microservice_name
+
+    #Write-Host "Service is now accessible at: $serviceUrl"
+
+        #$minikubeURLs = minikube service $microservice_name --url;
+    #
     #write-host "//"
     #write-host $minikubeURLs
     #write-host "//"
@@ -57,11 +65,15 @@ function createK8sResource {
     createHTTPSSecret;
     createDeployments;
     createServices;
+    createGateway;
+    createRoutes;
 }
 function deleteAnyExistingResources {
     deleteHTTPSSecret;
     deleteDeployments;
     deleteServices;
+    deleteGateway;
+    deleteRoutes;
 }
 
 
@@ -81,7 +93,7 @@ function edit_yaml_files {
     Write-Host "+"
     Write-Host $dockerfile_path;
 
-    $k8s_resource_files = @("\deployment.yaml", "\service.yaml",  "\gateway.yaml",  "\route.yaml");
+    $k8s_resource_files = @("\deployment.yaml", "\service.yaml",  "\gateway.yaml",  "\HTTProute.yaml",  "\UDProute.yaml");
     foreach ($file in $k8s_resource_files) {
         $yaml_path = $k8s_resources_folder + $file;
 

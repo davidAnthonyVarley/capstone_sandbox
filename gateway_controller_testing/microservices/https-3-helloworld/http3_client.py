@@ -39,7 +39,7 @@ class H3ClientProtocol:
             headers=[
                 (b":method", b"GET"),
                 (b":scheme", b"https"),
-                (b":authority", b"localhost"),
+                (b":authority", b"hello-app.local"),
                 (b":path", b"/"),
             ]
         )
@@ -81,4 +81,6 @@ async def fetch(ip, port):
 #asyncio.run(fetch("127.0.0.1",65297))
 #http://127.0.0.1:63813/
 #http://127.0.0.1:49701/
-asyncio.run(fetch("localhost", 49701))
+#asyncio.run(fetch("localhost", 30003))
+#asyncio.run(fetch("192.168.49.2", 30003))
+asyncio.run(fetch("hello-app.local", 30003))

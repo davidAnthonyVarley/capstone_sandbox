@@ -10,7 +10,7 @@ function printStars {
 }
 function createHTTPSSecret {
     write-host "Create new HTTPS Secret" -Foreground Cyan
-    kubectl create secret tls $https_k8s_secret_name --cert=$project_root\certs\cert.pem --key=$project_root\certs\key.pem --namespace default;
+    kubectl create secret tls $https_k8s_secret_name --cert=$project_root\certs\server.crt --key=$project_root\certs\server.key --namespace default;
     printStars;
 }
 function deleteHTTPSSecret {
@@ -41,5 +41,33 @@ function createServices {
 function deleteServices {
     write-host "Delete any existing $microservice_name Service"  -Foreground Cyan
     kubectl delete svc $microservice_name;
+    printStars;
+}
+
+function createGateway {
+    write-host "Create new Gateway with this name"  -Foreground Cyan
+    kubectl apply -f $k8s_resources_folder\gateway.yaml;
+    printStars;
+}
+
+
+function deleteGateway {
+    write-host "Delete any existing $microservice_name gateway"  -Foreground Cyan
+    kubectl delete gateway ($microservice_name + "-gateway");
+    printStars;
+}
+
+function createRoutes{
+    write-host "Create new HTTP and UDP Routes with this name"  -Foreground Cyan
+    kubectl apply -f $k8s_resources_folder\HTTProute.yaml;
+    kubectl apply -f $k8s_resources_folder\UDProute.yaml;
+    printStars;
+}
+
+
+function deleteRoutes {
+    write-host "Delete any existing $microservice_name http and udp routes"  -Foreground Cyan
+    kubectl delete httproute ($microservice_name + "-http-route");
+    kubectl delete udproute  ($microservice_name + "-uddp-route");
     printStars;
 }

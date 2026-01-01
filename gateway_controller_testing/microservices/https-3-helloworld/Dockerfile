@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install system dependencies, upgrade pip, and install Python packages in one layer
 RUN apt-get update && \
-    apt-get install -y build-essential curl git && \
+    apt-get install -y build-essential curl git net-tools && \
     rm -rf /var/lib/apt/lists/* && \
     python -m pip install --upgrade pip aioquic
 
