@@ -13,7 +13,7 @@ RUN apt-get update && \
 COPY . .
 
 # Expose HTTP/3 port
-EXPOSE PORT_PLACEHOLDER
+EXPOSE 30003
 
 # Default command
-CMD ["python3", "MICROSERVICE_NAME_PLACEHOLDER.py"]
+CMD ["python3", "https-3-helloworld.py"]
