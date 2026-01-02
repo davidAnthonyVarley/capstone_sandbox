@@ -1,0 +1,68 @@
+I believe that this means that envoy handled the http3 connection, but it was downgraded to http 1.1 because that's what the backend pod uses, ofc
+
+C:\Users\david\capstone_sandbox\gateway_controller_testing [main ≡ +1 ~0 -0 !]> kubectl run -it --rm curl-http3 --image=ghcr.io/macbre/curl-http3 -- /bin/sh
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+~ $ curl -vk --http3 https://192.168.1.240/get --resolve www.example.com:443:192.168.1.240
+* Added www.example.com:443:192.168.1.240 to DNS cache
+*   Trying 192.168.1.240:443...
+* SSL Trust: peer verification disabled
+* Server certificate:
+*   subject: CN=www.example.com; O=example organization
+*   start date: Jan  1 19:10:07 2026 GMT
+*   expire date: Jan  1 19:10:07 2027 GMT
+*   issuer: O=example Inc.; CN=example.com
+* SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)
+*  SSL certificate verification failed, continuing anyway!
+* Established connection to 192.168.1.240 (192.168.1.240 port 443) from 10.244.1.37 port 47732
+* using HTTP/3
+* [HTTP/3] [0] OPENED stream for https://192.168.1.240/get
+* [HTTP/3] [0] [:method: GET]
+* [HTTP/3] [0] [:scheme: https]
+* [HTTP/3] [0] [:authority: 192.168.1.240]
+* [HTTP/3] [0] [:path: /get]
+* [HTTP/3] [0] [user-agent: curl/8.17.0-DEV]
+* [HTTP/3] [0] [accept: */*]
+> GET /get HTTP/3
+> Host: 192.168.1.240
+> User-Agent: curl/8.17.0-DEV
+> Accept: */*
+>
+* Request completely sent off
+< HTTP/3 200
+< content-type: application/json
+< x-content-type-options: nosniff
+< date: Fri, 02 Jan 2026 01:55:49 GMT
+< content-length: 473
+< alt-svc: h3=":443"; ma=86400
+<
+{
+ "path": "/get",
+ "host": "192.168.1.240",
+ "method": "GET",
+ "proto": "HTTP/1.1",
+ "headers": {
+  "Accept": [
+   "*/*"
+  ],
+  "User-Agent": [
+   "curl/8.17.0-DEV"
+  ],
+  "X-Envoy-External-Address": [
+   "10.244.1.37"
+  ],
+  "X-Forwarded-For": [
+   "10.244.1.37"
+  ],
+  "X-Forwarded-Proto": [
+   "https"
+  ],
+  "X-Request-Id": [
+   "f0dcac70-bd40-4182-a781-8eb0e5933e2e"
+  ]
+ },
+ "namespace": "default",
+ "ingress": "",
+ "service": "",
+ "pod": "backend-77d4d5968-79b84"
+* Connection #0 to host 192.168.1.240:443 left intact
