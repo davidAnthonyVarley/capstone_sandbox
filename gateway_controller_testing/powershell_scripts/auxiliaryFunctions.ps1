@@ -27,7 +27,13 @@ function getResources {
     write-host "Display name of HTTPS Secret"  -Foreground Cyan
     kubectl get secret $https_k8s_secret_name -n default -o name
     printStars;
-    
+    write-host "Display Gateway Controller"  -Foreground Cyan
+    kubectl get gateway;
+    printStars;
+    write-host "Display HTTP & UDP Routes"  -Foreground Cyan
+    kubectl get httproute ($microservice_name + "-http-route");
+    kubectl get udproute ($microservice_name + "-uddp-route");
+    printStars;
 }
 
 function createMinikubeTunnel {

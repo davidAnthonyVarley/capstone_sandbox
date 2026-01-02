@@ -10,4 +10,4 @@ spec:
   rules:
   - backendRefs:
     - name: MICROSERVICE_NAME_PLACEHOLDER # **The name of your existing Service**
-      port: PORT_PLACEHOLDER      # **The port your Service exposes**
+      port: 30443      # **The port your Service exposes**

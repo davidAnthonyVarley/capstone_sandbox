@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: MICROSERVICE_NAME_PLACEHOLDER
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: MICROSERVICE_NAME_PLACEHOLDER
   ports:
@@ -11,4 +11,4 @@ spec:
     protocol: L4_PROTOCOL_PLACEHOLDER
     port: PORT_PLACEHOLDER      
     targetPort: PORT_PLACEHOLDER  
-    nodePort: PORT_PLACEHOLDER
+

@@ -6,12 +6,12 @@ spec:
   gatewayClassName: nginx
   listeners:
   - name: http
-    port: PORT_PLACEHOLDER
+    port: 30080
     protocol: HTTP
     hostname: "MICROSERVICE_NAME_PLACEHOLDER.local"
     
   - name: https
-    port: PORT_PLACEHOLDER
+    port: 30443
     protocol: HTTPS
     tls:
       mode: Terminate
@@ -19,9 +19,11 @@ spec:
       certificateRefs:
       - kind: Secret
         name: http3-tls-cert
-  
-  - name: http3-quic #this will set up a L4_PROTOCOL_PLACEHOLDER listener
+
+  - name: http3-quic
     port: PORT_PLACEHOLDER
     protocol: L4_PROTOCOL_PLACEHOLDER
+
+  
 
     

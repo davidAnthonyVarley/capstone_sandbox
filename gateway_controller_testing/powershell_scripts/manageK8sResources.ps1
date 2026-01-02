@@ -10,8 +10,8 @@ function printStars {
 }
 function createHTTPSSecret {
     write-host "Create new HTTPS Secret" -Foreground Cyan
-    kubectl create secret tls $https_k8s_secret_name --cert=$project_root\certs\server.crt --key=$project_root\certs\server.key --namespace default;
     printStars;
+    kubectl create secret tls $https_k8s_secret_name --cert=$project_root\certs\www.example.com.crt --key=$project_root\certs\www.example.com.key --namespace default;
 }
 function deleteHTTPSSecret {
     write-host "Delete any existing HTTPS Secret"  -Foreground Cyan
@@ -46,7 +46,7 @@ function deleteServices {
 
 function createGateway {
     write-host "Create new Gateway with this name"  -Foreground Cyan
-    kubectl apply -f $k8s_resources_folder\gateway.yaml;
+    kubectl apply -f $k8s_resources_folder\gateway.yaml -n default;
     printStars;
 }
 
