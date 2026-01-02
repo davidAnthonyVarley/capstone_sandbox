@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: https-3-helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: https-3-helloworld
+  template:
+    metadata:
+      labels:
+        app: https-3-helloworld
+        
+    spec:
+      volumes:
+        - name: cert-volume
+          secret:
+            secretName: example-cert
+      containers:
+      - name: https-3-helloworld
+        image: davidanthonyvarley/https-3-helloworld:latest
+
+        command: ["python3"]
+        args:
+          - https-3-helloworld.py
+          - --cert=/certs/tls.crt
+          - --key=/certs/tls.key
+        volumeMounts:
+          - name: cert-volume
+            mountPath: /certs
+
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 30003
+            protocol: UDP
+
+      
