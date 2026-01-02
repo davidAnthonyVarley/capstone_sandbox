@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: MICROSERVICE_NAME_PLACEHOLDER
+spec:
+  type: LoadBalancer
+  selector:
+    app: MICROSERVICE_NAME_PLACEHOLDER
+  ports:
+  - name: https-l4-protocol
+    protocol: L4_PROTOCOL_PLACEHOLDER
+    port: PORT_PLACEHOLDER      
+    targetPort: PORT_PLACEHOLDER  
+

@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: http3-route
+  namespace: envoy-gateway-system
+spec:
+  parentRefs:
+    - name: eg   # your Gateway name
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix 
+            value: /
+      backendRefs:
+        - name:  eg-proxy-to-h3hw-lb      
+          namespace:  default    
+          port: 30003
+          weight: 1

@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-lb
+  name: eg-proxy-to-h3hw-lb
   namespace: default
   annotations:
     metallb.universe.tf/address-pool: default-ip-addresses-pool
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
-    app: backend
+    app: https-3-helloworld
   ports:
-  - name: http
-    protocol: TCP
-    port: 3000
-    targetPort: 3000
+  - name: http3
+    protocol: UDP
+    port: 30003
+    targetPort: 30003
