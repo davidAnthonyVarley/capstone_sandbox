@@ -1,0 +1,26 @@
+minikube start --driver=virtualbox `
+    --cpus=2 `
+    --memory=3072 `
+    --disk-size=20g `
+    --virtualbox-no-vtx-check=true `
+    --virtualbox-extra-config="hostonlyadapter1=VirtualBox Host-Only Ethernet Adapter #2" `
+    --virtualbox-extra-config="nic1=bridged" `
+    --virtualbox-extra-config="bridgeadapter1=Intel(R) Wireless-AC 9560 160MHz" `
+    --virtualbox-extra-config="nic2=nat" `
+    --virtualbox-extra-config="nic3=hostonly" `
+    --virtualbox-extra-config="hostonlyadapter3="
+
+
+minikube start `
+  --driver=virtualbox `
+  --alsologtostderr `
+  --v=7 `
+  `
+  --virtualbox-extra-config="nic1=bridged" `
+  --virtualbox-extra-config="bridgeadapter1=Intel(R) Wireless-AC 9560 160MHz" `
+  --virtualbox-extra-config="nicpromisc1=allow-all" `
+  `
+  --virtualbox-extra-config="nic2=nat" `
+  `
+  --virtualbox-extra-config="nic3=hostonly" `
+  --virtualbox-extra-config="hostonlyadapter3=vboxnet0"
