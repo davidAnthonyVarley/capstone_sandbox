@@ -13,7 +13,7 @@ RUN apt-get update && \
 COPY . .
 
 # Expose HTTP/3 port
-EXPOSE 30003
+EXPOSE 10443
 
 # Default command
 CMD ["python3", "https-3-helloworld.py"]

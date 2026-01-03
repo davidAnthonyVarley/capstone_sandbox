@@ -107,8 +107,8 @@ async def main():
     # arguments for kubernetes deployment
     host = "0.0.0.0"
     args = parse_arguments()
-    port = 30003#args.port
-    print(f" the port for this http3 server should 30003, it is actually {port}")
+    port = 10443#args.port
+    print(f" the port for this http3 server should {port}")
     cert_path = args.cert
     key_path = args.key
 

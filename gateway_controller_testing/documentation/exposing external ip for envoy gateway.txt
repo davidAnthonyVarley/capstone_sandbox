@@ -1,0 +1,62 @@
+I was trying to get HTTP/3 with UDP working, so this may be super over kill. if you're using a TCP based service, it might be quite different (and easier!). if portforwarding existed for udp, this would be much, much easier.
+
+this is how i got started: https://gateway.envoyproxy.io/v1.4/tasks/quickstart/
+the envoy gateway proxy acts as a loadbalancer. 
+
+however, if you are on windows, there's a bit more work you need to do to make the minikube ip accessible from other hosts on your machine using a bridged network. here is how i did it with minikube and oracle virtual box as the driver. Please note, I had a fair bit of trouble exposing the minikube ip with docker driver (that might just be a skill issue from me):
+
+ESTIMATED TIME: 2 hours (at least)
+a) install oracle virtual box (takes a long time to do this)
+b) install minikube, run minikube start --driver=virtualbox. saying '--driver=virtualbox' is very important, as this may default to the docker driver otherwise
+once it is done setting up, run minikube stop.
+
+c) VERY IMPORTANT: change the network settings of the new minikube vm (as shown in the oracle virtual box menu) to have THREE network adaptors. 
+i. Your NAT adaptor 
+ii. host only ethernet adaptor
+iii. bridged adaptor
+save these settings.
+
+d) start the minikube cluster again. include debugging flags like --v=7 and --alsologstderr to catch any errors.
+
+e) run 'minikube ip' to get the minikube ip, and ping that ip from powershell to test connectivity. hopefully, you should get responses within a second or two
+f) run these commands to create a loadbalancer service (among other things): https://gateway.envoyproxy.io/v1.4/tasks/quickstart/ . make sure to install metallb as well (at hte top of this page)
+g) create an ip address pool, apply it; 
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: metallb-system-ip-addresses-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - <minikube ip> - <minikube ip>
+
+
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2
+  namespace: metallb-system
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: metallb-system-ip-addresses-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.59.107-192.168.59.107
+
+
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2
+  namespace: metallb-system
+
+
+h) now, run kubectl get svc -A. you should see something like 'envoy-default' in the envoy gateway system namespace. see if that service has an external ip, and if that external ip is your minikube ip, then you've exposed a minikube service loadbalancer from your vm to your host machine
+
+I hope this helps!

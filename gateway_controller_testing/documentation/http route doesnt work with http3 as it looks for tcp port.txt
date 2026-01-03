@@ -1,0 +1,99 @@
+I sent a http3 req to envoy gateway. the gateway accepted and forwarded it, but since httproute doesn't support http3 yet, it would only look for the tcp port and not the udp port on the service
+
+C:\Users\david\capstone_sandbox\gateway_controller_testing [main ≡ +6 ~2 -3 !]> kubectl get httproute backend -o yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"gateway.networking.k8s.io/v1","kind":"HTTPRoute","metadata":{"annotations":{},"name":"backend","namespace":"default"},"spec":{"hostnames":["www.example.com"],"parentRefs":[{"name":"eg"}],"rules":[{"backendRefs":[{"group":"","kind":"Service","name":"backend","port":3000,"weight":1}],"matches":[{"path":{"type":"PathPrefix","value":"/"}}]}]}}
+  creationTimestamp: "2026-01-03T01:28:12Z"
+  generation: 2
+  name: backend
+  namespace: default
+  resourceVersion: "14223"
+  uid: 09059cdb-bc7d-450b-b69d-c2db3018a9eb
+spec:
+  hostnames:
+  - www.example.com
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: eg
+  rules:
+  - backendRefs:
+    - group: ""
+      kind: Service
+      name: backend
+      port: 10433
+      weight: 1
+    matches:
+    - path:
+        type: PathPrefix
+        value: /
+status:
+  parents:
+  - conditions:
+    - lastTransitionTime: "2026-01-03T12:28:22Z"
+      message: Route is accepted
+      observedGeneration: 2
+      reason: Accepted
+      status: "True"
+      type: Accepted
+    - lastTransitionTime: "2026-01-03T12:28:22Z"
+      message: 'Failed to process route rule 0 backendRef 0: TCP Port 10433 not found
+        on Service default/backend.'
+      observedGeneration: 2
+      reason: PortNotFound
+      status: "False"
+      type: ResolvedRefs
+    controllerName: gateway.envoyproxy.io/gatewayclass-controller
+    parentRef:
+      group: gateway.networking.k8s.io
+      kind: Gateway
+      name: eg
+C:\Users\david\capstone_sandbox\gateway_controller_testing [main ≡ +6 ~2 -3 !]> kubectl get svc -A
+NAMESPACE              NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                                            AGE
+default                backend                     ClusterIP      10.98.149.11     <none>           10443/UDP     
+
+
+the httproute's backend ref, 'backend', is definitely available. Therefore, it is the fialure of http route to route udp packets; 
+
+C:\Users\david> kubectl logs -n envoy-gateway-system envoy-default-eg-e41e7b31-d4c7d6bc9-xk5tj
+Defaulted container "envoy" out of: envoy, shutdown-manager
+[2026-01-03 11:52:59.873][1][warning][misc] [source/common/protobuf/message_validator_impl.cc:23] Deprecated field: type envoy.config.core.v3.HeaderValueOption Using deprecated option 'envoy.config.core.v3.HeaderValueOption.append' from file base.proto. This configuration will be removed from Envoy soon. Please see https://www.envoyproxy.io/docs/envoy/latest/version_history/version_history for details. If continued use of this field is absolutely necessary, see https://www.envoyproxy.io/docs/envoy/latest/configuration/operations/runtime#using-runtime-overrides-for-deprecated-features for how to apply a temporary and highly discouraged override.
+{":authority":"www.example.com","bytes_received":0,"bytes_sent":167,"connection_termination_details":null,"downstream_local_address":"10.244.0.24:10443","downstream_remote_address":"192.168.59.1:57673","duration":40,"method":"GET","protocol":"HTTP/3","requested_server_name":"www.example.com","response_code":503,"response_code_details":"upstream_reset_before_response_started{remote_connection_failure|delayed_connect_error:_Connection_refused}","response_flags":"UF","route_name":"httproute/default/backend/rule/0/match/0/www_example_com","start_time":"2026-01-03T12:04:53.762Z","upstream_cluster":"httproute/default/backend/rule/0","upstream_host":"10.244.0.26:3000","upstream_local_address":null,"upstream_transport_failure_reason":"delayed_connect_error:_Connection_refused","user-agent":"curl/8.17.0","x-envoy-origin-path":"/","x-envoy-upstream-service-time":null,"x-forwarded-for":"192.168.59.1","x-request-id":"1db5d54b-e2c7-43e9-bdb9-c786e43c319a"}
+[2026-01-03 12:22:01.548][1][warning][misc] [source/common/protobuf/message_validator_impl.cc:23] Deprecated field: type envoy.config.core.v3.HeaderValueOption Using deprecated option 'envoy.config.core.v3.HeaderValueOption.append' from file base.proto. This configuration will be removed from Envoy soon. Please see https://www.envoyproxy.io/docs/envoy/latest/version_history/version_history for details. If continued use of this field is absolutely necessary, see https://www.envoyproxy.io/docs/envoy/latest/configuration/operations/runtime#using-runtime-overrides-for-deprecated-features for how to apply a temporary and highly discouraged override.
+{":authority":"www.example.com","bytes_received":0,"bytes_sent":0,"connection_termination_details":null,"downstream_local_address":"10.244.0.24:10443","downstream_remote_address":"192.168.59.1:56734","duration":40,"method":"GET","protocol":"HTTP/3","requested_server_name":"www.example.com","response_code":500,"response_code_details":"direct_response","response_flags":"-","route_name":"httproute/default/backend/rule/0/match/0/www_example_com","start_time":"2026-01-03T12:30:50.310Z","upstream_cluster":null,"upstream_host":null,"upstream_local_address":null,"upstream_transport_failure_reason":null,"user-agent":"curl/8.17.0","x-envoy-origin-path":"/","x-envoy-upstream-service-time":null,"x-forwarded-for":"192.168.59.1","x-request-id":"2fd4b6b0-0dfd-4e0d-a5ba-4d3fe4aac9d1"}
+{":authority":"www.example.com","bytes_received":0,"bytes_sent":0,"connection_termination_details":null,"downstream_local_address":"10.244.0.24:10443","downstream_remote_address":"192.168.59.1:59363","duration":1,"method":"GET","protocol":"HTTP/3","requested_server_name":"www.example.com","response_code":500,"response_code_details":"direct_response","response_flags":"-","route_name":"httproute/default/backend/rule/0/match/0/www_example_com","start_time":"2026-01-03T12:40:05.885Z","upstream_cluster":null,"upstream_host":null,"upstream_local_address":null,"upstream_transport_failure_reason":null,"user-agent":"curl/8.17.0","x-envoy-origin-path":"/","x-envoy-upstream-service-time":null,"x-forwarded-for":"192.168.59.1","x-request-id":"03802339-b1ed-4ae5-b989-cd5f7a7d275f"}
+[2026-01-03 13:50:21.495][1][warning][misc] [source/common/protobuf/message_validator_impl.cc:39] field 'envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.matcher' is marked as work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the threat model, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+[2026-01-03 13:53:05.696][1][warning][misc] [source/common/protobuf/message_validator_impl.cc:39] field 'envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.matcher' is marked as work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the threat model, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+C:\Users\david> kubectl run -it --rm busybox --image=busybox --restart=Never -- sh
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+/ #
+/ # nc -u -vz backend 10443
+backend (10.98.149.11:10443) open
+/ # exit
+E0103 14:37:09.789416   18784 v2.go:104] "Unhandled Error" err="write on closed stream 0"
+pod "busybox" deleted from default namespace
+C:\Users\david> # inside pod:
+C:\Users\david> nc -u -vz backend 10443
+nc : The term 'nc' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if
+a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ nc -u -vz backend 10443
++ ~~
+    + CategoryInfo          : ObjectNotFound: (nc:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+C:\Users\david> kubectl get svc -A
+NAMESPACE              NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                                                   AGE
+default                backend                     ClusterIP      10.98.149.11     <none>           10443/UDP                                                 13h
+default                backend-lb                  LoadBalancer   10.100.129.170   <pending>        80:32331/TCP                                              12h
+default                coredns                     ClusterIP      10.107.209.63    <none>           53/UDP                                                    76m
+default                kubernetes                  ClusterIP      10.96.0.1        <none>           443/TCP                                                   13h
+envoy-gateway-system   envoy-default-eg-e41e7b31   LoadBalancer   10.100.188.223   192.168.59.107   80:31655/TCP,443:31859/TCP,443:31935/UDP,5300:31083/UDP   13h
+envoy-gateway-system   envoy-gateway               ClusterIP      10.110.122.226   <none>           18000/TCP,18001/TCP,18002/TCP,19001/TCP,9443/TCP          13h
+kube-system            kube-dns                    ClusterIP      10.96.0.10       <none>           53/UDP,53/TCP,9153/TCP                                    13h
+metallb-system         metallb-webhook-service     ClusterIP      10.98.97.74      <none>           443/TCP       
