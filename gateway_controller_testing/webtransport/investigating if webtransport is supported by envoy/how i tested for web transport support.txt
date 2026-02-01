@@ -28,6 +28,21 @@ b) time consuming
 c) somewhat out of scope
 d) not even that useful, as i want to focus on comparing HTTP/2 vs HTTP/3
 
-Therefore, I decided to leave it at that
+
+I tried to resolve this by using webtranscat, as it was possible that my custom client was implemented incorrectly
+
+i kept on getting "error 40" when i queried with the webtrancat client. i didn't know what that was.
+i looked on the envoy gateway website, and saw that there was no documentation for how to test a webtransport client. 
+After research, I realised that I would need custom annotations for this, and lots of manual configuration. I decided that this was out of scope,
+as it is a highly manual process and perhaps tightly coupled to envoy gateway.
+Since there is no documentation on the envoy gateway site, I don't want to lose this much time to something that mightn't necessarily work and I'm already running tight enough on time
+
+It's out of scope with my remaining time, so maybe that's an area to pursue in the future.
+
+
+
+
+Therefore, I decided to not pursue web transport any further
+
 
 

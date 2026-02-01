@@ -1,0 +1,24 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyExtensionPolicy
+metadata:
+  name: envoyCBR-HTTPFilter
+  namespace: default
+spec:
+
+#right now, this extension policy applies to all traffic coming through the gateway. but we don't necessarily want all of that traffic to have this filter applied. We need to specify which httproute (and thus sytem/application) we want to be affected by this
+  targetRefs:
+#the group is an "API family". many different APIs in K8s serve wildly different purposes so we want to decouple them where possible    
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: backend
+#the internal envoy filter name for extProc == "envoy.filters.http.ext_proc"
+  extProc:
+    - backendRefs:
+        - name: envoyCBR-HTTPFilter-Service
+          port: 9002
+      processingMode:
+        request:
+          # An empty object "{}" means "SEND" (Envoy sends headers to the server)
+          headers: {} 
+        response:
+          headers: {mode: skip}

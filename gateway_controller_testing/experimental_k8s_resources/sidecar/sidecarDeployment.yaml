@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-cbr-processor
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: envoyCBR-HTTPFilter # MUST match the Service selector
+  template:
+    metadata:
+      labels:
+        app: envoyCBR-HTTPFilter
+    spec:
+      containers:
+      - name: processor
+        image: davidAnthonyVarley/envoy-ext-proc:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 9002
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "256Mi"

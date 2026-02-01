@@ -1,0 +1,67 @@
+$ curl -vk --http3 "https://www.example.com/get" --resolve "www.example.com:443:192.168.59.109"     * Added www.example.com:443:192.168.59.109 to DNS cache
+* Hostname www.example.com was found in DNS cache
+*   Trying 192.168.59.109:443...
+* SSL Trust: peer verification disabled
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / x25519 / RSASSA-PSS
+* Server certificate:
+*   subject: CN=www.example.com; O=example organization
+*   start date: Jan  1 19:10:07 2026 GMT
+*   expire date: Jan  1 19:10:07 2027 GMT
+*   issuer: O=example Inc.; CN=example.com
+*   Certificate level 0: Public key type RSA (2048/112 Bits/secBits), signed using sha256WithRSAEncryption
+* SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)
+*  SSL certificate verification failed, continuing anyway!
+* Established connection to www.example.com (192.168.59.109 port 443) from 192.168.59.1 port 60503
+* using HTTP/3
+* [HTTP/3] [0] OPENED stream for https://www.example.com/get
+* [HTTP/3] [0] [:method: GET]
+* [HTTP/3] [0] [:scheme: https]
+* [HTTP/3] [0] [:authority: www.example.com]
+* [HTTP/3] [0] [:path: /get]
+* [HTTP/3] [0] [user-agent: curl/8.17.0]
+* [HTTP/3] [0] [accept: */*]
+> GET /get HTTP/3
+> Host: www.example.com
+> User-Agent: curl/8.17.0
+> Accept: */*
+>
+< HTTP/3 200
+< content-type: application/json
+< x-content-type-options: nosniff
+< date: Sun, 01 Feb 2026 12:53:29 GMT
+< content-length: 473
+< alt-svc: h3=":443"; ma=86400
+<
+{
+ "path": "/get",
+ "host": "www.example.com",
+ "method": "GET",
+ "proto": "HTTP/1.1",
+ "headers": {
+  "Accept": [
+   "*/*"
+  ],
+  "User-Agent": [
+   "curl/8.17.0"
+  ],
+  "X-Envoy-External-Address": [
+   "192.168.59.1"
+  ],
+  "X-Forwarded-For": [
+   "192.168.59.1"
+  ],
+  "X-Forwarded-Proto": [
+   "https"
+  ],
+  "X-Request-Id": [
+   "328401f1-ab11-46f4-9595-7e80832fa497"
+  ]
+ },
+ "namespace": "default",
+ "ingress": "",
+ "service": "",
+ "pod": "backend-77d4d5968-kb8n5"
+}* abort upload
+* Connection #0 to host www.example.com:443 left intact
+
+//from author of fyp, ignore the "abort upload" message, it just means that client request was terminated because there was nothing to upload, it does not mean failure (in this context)
