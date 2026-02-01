@@ -1,0 +1,7 @@
+1. get envoy gateway controller 
+kubectl get pods -A
+#should be something like envoy-default-eg-e41e7b31-d69cfdf7f-tsl4t
+
+2. get the logs of that pod
+kubectl logs <envoy-pod-name> -n <namespace>
+ kubectl logs envoy-default-eg-e41e7b31-d69cfdf7f-tsl4t -n envoy-gateway-system
