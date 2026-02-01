@@ -1,0 +1,20 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: webtransport-config
+  namespace: envoy-gateway-system
+spec:
+  telemetry:
+    accessLog:
+      settings:
+        - format:
+            type: Text
+            text: |
+              [%START_TIME%] "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%"
+              %RESPONSE_CODE% %RESPONSE_FLAGS% %BYTES_RECEIVED% %BYTES_SENT% %DURATION%
+              "%REQ(:AUTHORITY)%" "%REQ(USER-AGENT)%" "%REQ(:PROTOCOL)%"
+  # The field name is usually 'protocol' or 'http' depending on minor version
+  # For v1alpha1, try this flattened structure:
+  http:
+    h3:
+      enable: true

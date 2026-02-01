@@ -87,4 +87,5 @@ if __name__ == "__main__":
     TARGET_HOST = "www.example.com"
     TARGET_PATH = "/get"
 
-    asyncio.run(run_wt_test(GATEWAY_IP, GATEWAY_PORT, TARGET_HOST, TARGET_PATH))
+    asyncio.run(run_wt_test("127.0.0.1", 3000, "www.example.com", "/get"))
+    #asyncio.run(run_wt_test(GATEWAY_IP, GATEWAY_PORT, TARGET_HOST, TARGET_PATH))

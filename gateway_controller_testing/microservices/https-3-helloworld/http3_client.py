@@ -59,28 +59,32 @@ async def fetch(ip, port):
         verify_mode=ssl.CERT_NONE
     )
 
-    # 'connect' returns an AioQuicConnectionProtocol instance
-    print(f"before trrying to connect to server at {ip}:{port}")
+    print(f"before trying to connect to server at {ip}:{port}")
+    
+    # Everything inside this 'async with' block must be indented (4 spaces)
     async with connect(ip, port, configuration=configuration) as protocol:
         
         # 1. Instantiate the H3 client with the QUIC connection
         client = H3ClientProtocol(protocol._quic)
 
-        # 2. **Override the protocol's event handler** to direct events to your H3 client
-        # When the AioQuicConnectionProtocol receives a QUIC event, it now calls your handler.
+        # 2. Override the protocol's event handler
         protocol.quic_event_received = client.quic_event_received
 
         # 3. Send the request
         client.send_request()
+        
+        # --- THE FIX ---
+        # Explicitly transmit the buffered data to the network
+        protocol.transmit()
+        # ----------------
 
         # 4. Wait for the response to complete
         await client.response_complete.wait()
-        
-        # The 'async with' block will automatically close the connection upon exit
-
 #asyncio.run(fetch("127.0.0.1",65297))
 #http://127.0.0.1:63813/
 #http://127.0.0.1:49701/
 #asyncio.run(fetch("localhost", 30003))
 #asyncio.run(fetch("192.168.49.2", 30003))
-asyncio.run(fetch("hello-app.local", 30003))
+#asyncio.run(fetch("192.168.59.107", 10433))
+asyncio.run(fetch("192.168.59.107", 30856))
+#asyncio.run(fetch("127.0.0.1", 10433))

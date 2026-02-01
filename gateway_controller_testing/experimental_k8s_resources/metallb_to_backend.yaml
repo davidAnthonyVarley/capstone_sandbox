@@ -10,7 +10,7 @@ spec:
   selector:
     app: backend       # MUST match pod label
   ports:
-  - name: http
-    protocol: TCP
-    port: 80          # External port
-    targetPort: 3000  # The port the backend container actually listens on
+  - name: http3
+    protocol: UDP
+    port: 10433          # External port
+    targetPort: 10433  # The port the backend container actually listens on

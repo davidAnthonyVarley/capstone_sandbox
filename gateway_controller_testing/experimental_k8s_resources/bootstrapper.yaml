@@ -1,0 +1,26 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: webtransport-config
+  namespace: envoy-gateway-system
+spec:
+  # The bootstrap field must be an object, and the value is the YAML string
+  bootstrap:
+    type: Replace
+    value: |
+      admin:
+        address:
+          socket_address:
+            address: 0.0.0.0
+            port_value: 19000
+  telemetry:
+    accessLog:
+      settings:
+        - sinks:
+            - type: File
+              file:
+                path: /dev/stdout
+          format:
+            type: Text
+            text: |
+              [%START_TIME%] "%REQ(:METHOD)% %REQ(:PROTOCOL)% %REQ(:AUTHORITY)%" %RESPONSE_CODE% %RESPONSE_FLAGS%

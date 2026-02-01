@@ -68,5 +68,17 @@ async def run_wt_test(ip, port, host, path):
             print("🕒 Timeout: Server did not respond to CONNECT.")
 
 if __name__ == "__main__":
-    # Test against your local wts.py
-    asyncio.run(run_wt_test("127.0.0.1", 3000, "www.example.com", "/get"))
+    # The External IP of your Gateway
+    GATEWAY_IP = "192.168.59.109" 
+
+    # The UDP NodePort for HTTP/3 (Verify with: kubectl get svc -n envoy-gateway-system)
+    # It must be the port mapped to UDP 443
+    GATEWAY_UDP_PORT = 30856 
+
+    # Must match the hostname in your HTTPRoute and your Certificates
+    HOSTNAME = "www.example.com"
+    
+    # Must match the path rule in your HTTPRoute
+    PATH = "/get"
+
+    asyncio.run(run_wt_test(GATEWAY_IP, GATEWAY_UDP_PORT, HOSTNAME, PATH))

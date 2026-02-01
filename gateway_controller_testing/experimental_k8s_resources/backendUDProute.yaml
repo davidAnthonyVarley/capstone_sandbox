@@ -1,13 +1,14 @@
 apiVersion: gateway.networking.k8s.io/v1
-kind: UDPRoute
+kind: HTTPRoute
 metadata:
-  name: backend-udproute-for-http3
+  name: backend-service-http3
   namespace: default
 spec:
   parentRefs:
-    - name: eg   # your Gateway name
+    - name: eg   
   rules:
     - backendRefs:
-        - name: backend       # Service name
-          port: 10443          # Service port, not containerPort
+        - name: backend
+          protocol: UDP     
+          port: 10443          
           weight: 1

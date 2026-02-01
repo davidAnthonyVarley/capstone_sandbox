@@ -1,0 +1,33 @@
+1. i created a local webtransport client and server to verify that my client worked correctly
+    this worked as expected when i made a request
+
+2. i sent a request from the client to the gateway. the gateway didn't even log this request. this was unlike when i would send UDP via UDPRoute and it would break
+    similarly, when i tried to send HTTP/3, with a UDP backendRef, it did log that request (and its subsequent failure)
+
+3. I edited the HTTPRoute to explicitly allow Extended CONNECT requests, but I got the same result as before 
+
+4. I tried to insert this into hte bootstrap config for envoy;
+"
+http3_protocol_options:
+  allow_extended_connect: true   # Allows the special WebTransport CONNECT method
+upgrade_configs:
+  - upgrade_type: webtransport    # Permits the protocol upgrade
+"
+I linked the envoy proxy configuration to the gateway class
+
+"
+metadata:
+  annotations:
+    gateway.envoyproxy.io/extension-types: envoyproxy
+    gateway.envoyproxy.io/extension-ref-name: webtransport-config # Matches your EnvoyProxy name
+"
+
+after verifying these three steps had worked as intended, I faced the same issues as before. I determined that any further work required to get WT working would be
+a) very coupled to envoy and perhaps not generalisable across other gateway api implementations
+b) time consuming
+c) somewhat out of scope
+d) not even that useful, as i want to focus on comparing HTTP/2 vs HTTP/3
+
+Therefore, I decided to leave it at that
+
+
