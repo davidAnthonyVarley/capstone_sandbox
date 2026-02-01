@@ -1,7 +1,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyExtensionPolicy
 metadata:
-  name: envoyCBR-HTTPFilter
+  name: envoycbr-httpfilter
   namespace: default
 spec:
 
@@ -10,15 +10,13 @@ spec:
 #the group is an "API family". many different APIs in K8s serve wildly different purposes so we want to decouple them where possible    
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: backend
-#the internal envoy filter name for extProc == "envoy.filters.http.ext_proc"
+      name: http-1p1-helloworld
+#the internal envoy filter name for extProc == "envoy.filters.http.ext_proc", but that doesn't work here
   extProc:
     - backendRefs:
-        - name: envoyCBR-HTTPFilter-Service
+        - name: envoycbr-httpfilter-service
           port: 9002
       processingMode:
-        request:
-          # An empty object "{}" means "SEND" (Envoy sends headers to the server)
-          headers: {} 
-        response:
-          headers: {mode: skip}
+        request: {}
+        #response: 
+        #  body: Streamed 

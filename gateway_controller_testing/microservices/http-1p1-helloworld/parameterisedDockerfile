@@ -2,5 +2,5 @@ FROM python:3.11-slim
 WORKDIR /app
 COPY . .
 RUN pip install -r requirements.txt
-EXPOSE 3000
-CMD ["python3", "http-1p1-helloworld.py"]
+EXPOSE PORT_PLACEHOLDER
+CMD ["python3", "MICROSERVICE_NAME_PLACEHOLDER.py"]

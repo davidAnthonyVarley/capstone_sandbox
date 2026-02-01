@@ -1,0 +1,1 @@
+docker build -t davidAnthonyVarley/http-1p1-helloworld:latest .

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-1p1-helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-1p1-helloworld
+  template:
+    metadata:
+      labels:
+        app: http-1p1-helloworld
+        
+    spec:
+      volumes:
+        - name: cert-volume
+          secret:
+            secretName: example-cert
+      containers:
+      - name: http-1p1-helloworld
+        image: davidAnthonyVarley/http-1p1-helloworld:latest
+
+        command: ["python3"]
+        args:
+          - http-1p1-helloworld.py
+          - --cert=/certs/tls.crt
+          - --key=/certs/tls.key
+        volumeMounts:
+          - name: cert-volume
+            mountPath: /certs
+
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000
+
+      

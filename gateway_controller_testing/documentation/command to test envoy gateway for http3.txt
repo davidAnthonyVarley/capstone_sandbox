@@ -1,3 +1,7 @@
+$GATEWAY_HOST = (minikube ip)
+realcurl -vk --http3 "https://www.example.com/get" --resolve "www.example.com:443:$GATEWAY_HOST"
+
+
 I believe that this means that envoy handled the http3 connection, but it was downgraded to http 1.1 because that's what the backend pod uses, ofc
 
 C:\Users\david\capstone_sandbox\gateway_controller_testing [main ≡ +1 ~0 -0 !]> kubectl run -it --rm curl-http3 --image=ghcr.io/macbre/curl-http3 -- /bin/sh
