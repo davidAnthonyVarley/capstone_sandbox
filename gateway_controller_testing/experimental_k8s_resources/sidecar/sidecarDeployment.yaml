@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: envoy-cbr-httpfilter-service  # Changed from envoyCBR-HTTPFilter-Service
+  name: envoycbr-httpfilter-sidecar  # Changed from envoyCBR-HTTPFilter-Service
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: envoyCBR-HTTPFilter # MUST match the Service selector
+      app: envoycbr-httpfilter-sidecar # MUST match the Service selector
   template:
     metadata:
       labels:
-        app: envoyCBR-HTTPFilter
+        app: envoycbr-httpfilter-sidecar
     spec:
       containers:
       - name: processor

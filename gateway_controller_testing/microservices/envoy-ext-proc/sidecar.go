@@ -33,10 +33,11 @@ func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
 							HeaderMutation: &extproc.HeaderMutation{
 								SetHeaders: []*core.HeaderValueOption{
 									{
-										Header: &core.HeaderValue{
-											Key:   "x-custom-header",
-											Value: "processed-by-ext-proc",
-										},
+									    Header: &core.HeaderValue{
+									        Key:   "random-header-from-david",
+									        RawValue: []byte("this was processed-by-ext-proc yuuup"), // Use RawValue instead of Value: "this was processed-by-ext-proc yuuup",
+									    },
+									    AppendAction: core.HeaderValueOption_OVERWRITE_IF_EXISTS_OR_ADD, 
 									},
 								},
 							},
