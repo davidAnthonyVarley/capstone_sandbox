@@ -1,0 +1,22 @@
+{
+  "event_01": {
+    "price": 600.0,
+    "category": "hardware",
+    "location": "NewYork",
+    "severity": 10.0,
+    "status": "active",
+    "type": "rain"
+  },
+  "event_02": {
+    "price": 100.0,
+    "category": "software",
+    "location": "London",
+    "severity": 2.0,
+    "status": "inactive",
+    "type": "sunny"
+  },
+  "event_03": {
+    "price": 200.0,
+    "type": "rain"
+  }
+}

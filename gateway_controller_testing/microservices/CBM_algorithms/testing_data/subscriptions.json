@@ -1,0 +1,59 @@
+{
+  "subscriptions": [
+    {
+      "id": "1",
+      "predicates": [
+        {
+          "attribute": "price",
+          "operation": "greaterthan",
+          "value": 50000.0
+        },
+        {
+          "attribute": "category",
+          "operation": "equal",
+          "value": "hardware"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "predicates": [
+        {
+          "attribute": "location",
+          "operation": "equal",
+          "value": "NewYork"
+        },
+        {
+          "attribute": "severity",
+          "operation": "greaterthan",
+          "value": 5.0
+        },
+        {
+          "attribute": "status",
+          "operation": "equal",
+          "value": "active"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "predicates": [
+        {
+          "attribute": "type",
+          "operation": "equal",
+          "value": "rain"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "predicates": [
+        {
+          "attribute": "price",
+          "operation": "greaterthan",
+          "value": 150.0
+        }
+      ]
+    }
+  ]
+}

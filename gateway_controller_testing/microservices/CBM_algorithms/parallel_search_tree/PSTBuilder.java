@@ -1,206 +1,159 @@
 import java.util.*;
-
-
-
-
-interface Node {
-    void match(Map<String, Object> event, Set<String> results);
-}
-
-class Constraint {
-    String attr;
-    Object val;
-    boolean isRange; // true if it's a "greater than" test
-
-    Constraint(String attr, Object val, boolean isRange) {
-        this.attr = attr; this.val = val; this.isRange = isRange;
-    }
-}
-
-class Subscription {
-    String id;
-    List<Constraint> constraints = new ArrayList<>();
-
-    Subscription(String id) { this.id = id; }
-    void add(String attr, Object val) { constraints.add(new Constraint(attr, val, false)); }
-    void addRange(String attr, double val) { constraints.add(new Constraint(attr, val, true)); }
-}
-
-class PSTCompiler {
-    public static Node buildTree(List<Subscription> subs) {
-        Node root = null;
-        for (Subscription sub : subs) {
-            // Weave each subscription into the current root's STAR path
-            root = weaveSubscription(sub, root);
-        }
-        return root;
-    }
-
-    private static Node weaveSubscription(Subscription sub, Node currentTree) {
-        // Create the leaf for this specific subscriber
-        Node leaf = new LeafNode(sub.id);
-        
-        // Build the AND chain for the constraints (backwards)
-        Node chain = leaf;
-        for (int i = sub.constraints.size() - 1; i >= 0; i--) {
-            Constraint c = sub.constraints.get(i);
-            
-            // The very first node in the chain gets the "currentTree" in its STAR path
-            // This ensures the rest of the waterfall is preserved.
-            Node starPath = (i == 0) ? currentTree : null;
-
-            if (c.isRange) {
-                chain = new RangePSTNode(c.attr, (double)c.val, chain, null, starPath);
-            } else {
-                chain = new PSTNode(c.attr, c.val, chain, null, starPath);
-            }
-        }
-        return chain;
-    }
-}
-
-class PSTNode implements Node {
-    String attribute;
-    Object targetValue; // PST usually compares against a specific constant
-
-    Node ifMatch;    // Successor if event[attr] == targetValue
-    Node ifNoMatch;  // Successor if event[attr] != targetValue
-    Node star;       // ALWAYS follow this (Don't Care path)
-
-    public void match(Map<String, Object> event, Set<String> results) {
-        // --- THE PARALLEL STEP ---
-        // In a PST, we always explore the Star branch because it contains 
-        // subscriptions that don't care about the current 'attribute'.
-        if (star != null) {
-            star.match(event, results);
-        }
-
-        // --- THE CONDITIONAL STEP ---
-        if (event.containsKey(attribute)) {
-            Object val = event.get(attribute);
-            if (val.equals(targetValue)) {
-                if (ifMatch != null) ifMatch.match(event, results);
-            } else {
-                if (ifNoMatch != null) ifNoMatch.match(event, results);
-            }
-        }
-    }
-
-    public PSTNode(String attribute, Object targetValue, Node ifMatch, Node ifNoMatch, Node star) {
-        this.attribute = attribute;
-        this.targetValue = targetValue;
-        this.ifMatch = ifMatch;
-        this.ifNoMatch = ifNoMatch;
-        this.star = star;
-    }
-}
-
-class LeafNode implements Node {
-    private String subscriptionId;
-
-    public LeafNode(String id) { this.subscriptionId = id; }
-
-    @Override
-    public void match(Map<String, Object> event, Set<String> results) {
-        results.add(subscriptionId); // This is where the match is recorded
-    }
-}
-
-class CollectionNode implements Node {
-    private List<Node> children = new ArrayList<>();
-    
-    public void addChild(Node n) { children.add(n); }
-
-    @Override
-    public void match(Map<String, Object> event, Set<String> results) {
-        for (Node child : children) {
-            child.match(event, results);
-        }
-    }
-}
-
-class RangePSTNode implements Node {
-    String attribute;
-    double threshold;
-    Node ifGreater;
-    Node ifLessEqual;
-    Node star; // The "Parallel" Don't-Care path
-
-    public RangePSTNode(String attr, double threshold, Node gt, Node le, Node star) {
-        this.attribute = attr;
-        this.threshold = threshold;
-        this.ifGreater = gt;
-        this.ifLessEqual = le;
-        this.star = star;
-    }
-
-    @Override
-    public void match(Map<String, Object> event, Set<String> results) {
-        // 1. Parallel Step: Always check filters that don't care about this attribute
-        if (star != null) star.match(event, results);
-
-        // 2. Conditional Step: Check filters that DO care about this attribute
-        if (event.containsKey(attribute)) {
-            Object val = event.get(attribute);
-            if (val instanceof Number num) {
-                if (num.doubleValue() > threshold) {
-                    if (ifGreater != null) ifGreater.match(event, results);
-                } else {
-                    if (ifLessEqual != null) ifLessEqual.match(event, results);
-                }
-            }
-        }
-    }
-}
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class PSTBuilder {
-    public static void main(String[] args) {
+
+    static Node PSTroot;
+
+    public void matchEvents() throws Exception {
+                // 1. Read the events file
+        String eventContent = new String(Files.readAllBytes(Paths.get("..\\testing_data\\events.json")));
+        Map<String, Object> events = SimpleJson.parseObject(eventContent);
+
+        // 2. Iterate through each event and match it
+        for (String eventId : events.keySet()) {
+            Map<String, Object> eventData = (Map<String, Object>) events.get(eventId);
+            System.out.println("--- Processing Event: " + eventId + " ---");
+            matchEventToSubscriptions(eventData);
+        }
+    }
+
+    public void matchEventToSubscriptions(Map<String, Object> eventData) {
+            Set<String> results = new HashSet<>();
+
+            // START TIMING
+            long startTime = System.nanoTime();
+
+            if (PSTroot != null) PSTroot.match(eventData, results);
+
+            // END TIMING
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime); // duration in nanoseconds
+
+            System.out.println("Matched Subs: " + results);
+            System.out.println("Processing Time: " + duration + " ns");
+    }
+
+    public static void loadSubscriptions() {
         List<Subscription> subs = new ArrayList<>();
 
-        // Add 100 simple subscriptions dynamically
-        for (int i = 1; i <= 20; i++) {
-            Subscription s = new Subscription("Sub_" + i);
-            s.add("attribute_" + i, "value_" + i);
-            subs.add(s);
+        try {
+            // 1. Read the JSON file
+            String content = new String(Files.readAllBytes(Paths.get("..\\testing_data\\subscriptions.json")));
+            
+            // 2. Parse using the built-in helper
+            Map<String, Object> rootJson = SimpleJson.parseObject(content);
+            List<Object> jsonSubs = (List<Object>) rootJson.get("subscriptions");
+
+            // 3. Convert JSON maps into Subscription objects
+            for (Object item : jsonSubs) {
+                Map<String, Object> subMap = (Map<String, Object>) item;
+                Subscription s = new Subscription((String) subMap.get("id"));
+
+                List<Object> predicates = (List<Object>) subMap.get("predicates");
+                for (Object pObj : predicates) {
+                    Map<String, Object> p = (Map<String, Object>) pObj;
+                    String attr = (String) p.get("attribute");
+                    String op = (String) p.get("operation");
+                    Object val = p.get("value");
+
+                    if ("greaterthan".equalsIgnoreCase(op)) {
+                        s.addRange(attr, Double.parseDouble(val.toString()));
+                    } else {
+                        s.add(attr, val);
+                    }
+                }
+                subs.add(s);
+            }
+
+            // 4. Build and Match
+            PSTBuilder.PSTroot = PSTCompiler.buildTree(subs);
+
+        } catch (Exception e) {
+            System.err.println("JSON Error: " + e.getMessage());
+            e.printStackTrace();
         }
+    }
 
-        // Add specific complex subscriptions
-        Subscription complex = new Subscription("Complex_01");
-        complex.addRange("price", 500.0);
-        complex.add("category", "hardware");
-        subs.add(complex);
+    public PSTBuilder() {
+        loadSubscriptions();
 
-        Subscription s_triple = new Subscription("Triple_Match_Sub");
-        s_triple.add("location", "NewYork");   // Predicate 1
-        s_triple.addRange("severity", 5.0);    // Predicate 2
-        s_triple.add("status", "active");      // Predicate 3
-        subs.add(s_triple);
+    }
+}
 
-        Subscription s_weather = new Subscription("Weather_Sub");
-        s_weather.add("type", "rain");
-        subs.add(s_weather);
+/**
+ * A minimal, zero-dependency JSON parser for the Capstone Sandbox environment.
+ */
+class SimpleJson {
+    public static Map<String, Object> parseObject(String json) {
+        json = json.trim();
+        if (json.startsWith("{")) json = json.substring(1, json.length() - 1);
+        Map<String, Object> map = new LinkedHashMap<>();
+        int i = 0;
+        while (i < json.length()) {
+            i = skipWhitespace(json, i);
+            if (i >= json.length()) break;
+            
+            // Key
+            int keyEnd = json.indexOf(":", i);
+            String key = json.substring(i, keyEnd).replace("\"", "").trim();
+            i = keyEnd + 1;
+            
+            // Value
+            i = skipWhitespace(json, i);
+            int valEnd = findValueEnd(json, i);
+            String valStr = json.substring(i, valEnd).trim();
+            map.put(key, parseValue(valStr));
+            
+            i = valEnd + 1; // skip comma
+        }
+        return map;
+    }
 
-        // Subscription B cares about stock prices
-        Subscription s_stock = new Subscription("Stock_Sub");
-        s_stock.addRange("price", 150.0);
-        subs.add(s_stock);
+    private static Object parseValue(String val) {
+        val = val.trim();
+        if (val.startsWith("{")) return parseObject(val);
+        if (val.startsWith("[")) return parseArray(val);
+        if (val.startsWith("\"")) return val.substring(1, val.length() - 1);
+        if (val.equals("true")) return true;
+        if (val.equals("false")) return false;
+        try { return Double.parseDouble(val); } catch (Exception e) { return val; }
+    }
 
-        Node root = PSTCompiler.buildTree(subs);
+    private static List<Object> parseArray(String json) {
+        json = json.trim().substring(1, json.length() - 1);
+        List<Object> list = new ArrayList<>();
+        int i = 0;
+        while (i < json.length()) {
+            i = skipWhitespace(json, i);
+            int end = findValueEnd(json, i);
+            list.add(parseValue(json.substring(i, end)));
+            i = end + 1;
+        }
+        return list;
+    }
 
-        Map<String, Object> event = new HashMap<>();
-        event.put("attribute_5", "value_5");
-        event.put("price", 600.0);
-        event.put("category", "hardware");
+    private static int skipWhitespace(String s, int i) {
+        while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
+        return i;
+    }
 
-        event.put("location", "NewYork");
-        event.put("severity", 10.0);
-        event.put("status", "active");
-
-        event.put("type", "rain");
-
-        Set<String> results = new HashSet<>();
-        if (root != null) root.match(event, results);
-
-        System.out.println("Matched: " + results);
+    private static int findValueEnd(String s, int start) {
+        int braces = 0, brackets = 0;
+        boolean inQuotes = false;
+        for (int i = start; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '\"') inQuotes = !inQuotes;
+            if (!inQuotes) {
+                if (c == '{') braces++;
+                else if (c == '}') braces--;
+                else if (c == '[') brackets++;
+                else if (c == ']') brackets--;
+                else if (c == ',' && braces == 0 && brackets == 0) return i;
+            }
+        }
+        return s.length();
     }
 }
