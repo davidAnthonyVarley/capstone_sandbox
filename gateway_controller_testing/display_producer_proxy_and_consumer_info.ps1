@@ -1,0 +1,11 @@
+Write-Host "realcurl -vk --http3 "https://www.example.com/mq" --resolve "www.example.com:443:$GATEWAY_HOST"; 
+" -ForegroundColor Cyan; 
+realcurl -vk --http3 "https://www.example.com/mq" --resolve "www.example.com:443:$GATEWAY_HOST"; 
+Write-Host "#################"; 
+Start-Sleep -Seconds 3;
+Write-Host "kubectl logs -l app=producer" -ForegroundColor Cyan; 
+kubectl logs -l app=producer;
+Write-Host "#################"; 
+Write-Host "kubectl logs -l app=subscriber-pod" -ForegroundColor Cyan; 
+kubectl logs -l app=subscriber-pod;
+Write-Host "#################"; 

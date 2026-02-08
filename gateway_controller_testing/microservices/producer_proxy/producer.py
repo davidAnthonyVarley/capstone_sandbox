@@ -12,17 +12,23 @@ RMQ_HOST = os.getenv('RABBITMQ_HOST', 'rmq-service')
 @app.route('/mq', methods=['GET'])
 def match_event():
     # 1. Debug Prints (Run first)
-    print("--- Incoming Request Debug ---")
-    print(f"Method: {request.method}")
-    print(f"Path: {request.path}")
-    print(f"Headers: \n{request.headers}")
-    print(f"Raw Data: {request.get_data(as_text=True)}")
-    print("------------------------------")
-
+    print("--- Incoming Request Debug ---", flush=True)
+    print(f"Method: {request.method}", flush=True)
+    print(f"Path: {request.path}", flush=True)
+    print(f"Headers: \n{request.headers}", flush=True)
+    print(f"Raw Data: {request.get_data(as_text=True)}", flush=True)
+    print("------------------------------", flush=True)
+    #headers_to_send = {k: v for k, v in request.headers.items()}
+    headers_to_send = dict(request.headers)
+    
+    event_data = {
+        "payload": request.get_json(silent=True) or {},
+        "original_headers": headers_to_send,
+        "method": request.method
+    }
     # 2. Handle incoming data safely
-    event_data = request.get_json(silent=True)
     if event_data is None:
-        event_data = {"status": "default_payload_because_no_json_sent"}
+        event_data = {"status": "default_payload_because_no_json_sent, or because 'event_data' was None"}
 
     # 3. Setup RabbitMQ Connection
     user = 'admin'
