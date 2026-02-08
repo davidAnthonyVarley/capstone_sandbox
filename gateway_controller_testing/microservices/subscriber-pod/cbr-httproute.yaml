@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: http-1p1-helloworld
+  name: cbr-httproute
   namespace: default
 spec:
   hostnames:
@@ -11,14 +11,26 @@ spec:
     kind: Gateway
     name: eg
   rules:
-  - backendRefs:
+  - matches:
+    - method: GET
+      path:
+        type: PathPrefix
+        value: /get
+    backendRefs:
     - group: ""
       kind: Service
       name: http-1p1-helloworld
       port: 3000
       weight: 1
-    matches:
+
+  - matches:
     - method: GET
       path:
         type: PathPrefix
-        value: /get
+        value: /mq
+    backendRefs:
+      - group: ""
+        kind: Service
+        name: rmq-Service
+        port: 5672
+        weight: 1

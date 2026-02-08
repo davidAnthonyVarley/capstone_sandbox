@@ -10,7 +10,7 @@ spec:
 #the group is an "API family". many different APIs in K8s serve wildly different purposes so we want to decouple them where possible    
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: http-1p1-helloworld
+      name: cbr-httproute
 #the internal envoy filter name for extProc == "envoy.filters.http.ext_proc", but that doesn't work here
   extProc:
     - backendRefs:

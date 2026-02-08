@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+      - name: producer
+        image: davidAnthonyVarley/producer-proxy:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_RABBITMQ_HOST
+          value: "rmq-service" # Change to your RMQ address
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: producer-service
+spec:
+  type: LoadBalancer # This gives you an IP to hit from outside the cluster
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: producer
+  

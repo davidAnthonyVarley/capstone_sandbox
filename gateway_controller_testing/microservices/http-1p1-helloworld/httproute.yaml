@@ -22,3 +22,13 @@ spec:
       path:
         type: PathPrefix
         value: /get
+    - group: ""
+      kind: Service
+      name: subscriber-pod
+      port: 3000
+      weight: 1
+    matches:
+    - method: GET
+      path:
+        type: PathPrefix
+        value: /mq
