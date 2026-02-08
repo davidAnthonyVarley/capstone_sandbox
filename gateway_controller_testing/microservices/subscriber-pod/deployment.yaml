@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriber-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: subscriber-pod
+  template:
+    metadata:
+      labels:
+        app: subscriber-pod
+        
+    spec:
+      volumes:
+        - name: cert-volume
+          secret:
+            secretName: example-cert
+      containers:
+      - name: subscriber-pod
+        image: davidAnthonyVarley/subscriber-pod:latest
+
+        command: ["python3"]
+        args:
+          - subscriber-pod.py
+          - --cert=/certs/tls.crt
+          - --key=/certs/tls.key
+        volumeMounts:
+          - name: cert-volume
+            mountPath: /certs
+
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000
+        
+        env:
+          - name: RABBITMQ_HOST
+            value: "rmq.default.svc.cluster.local"
+
+      
