@@ -9,19 +9,39 @@ app = Flask(__name__)
 # Get RabbitMQ host from environment variable
 RMQ_HOST = os.getenv('RABBITMQ_HOST', 'rmq-service')
 
-@app.route('/match', methods=['POST'])
+@app.route('/mq', methods=['GET'])
 def match_event():
-    # 1. Setup connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RMQ_HOST))
+    # 1. Debug Prints (Run first)
+    print("--- Incoming Request Debug ---")
+    print(f"Method: {request.method}")
+    print(f"Path: {request.path}")
+    print(f"Headers: \n{request.headers}")
+    print(f"Raw Data: {request.get_data(as_text=True)}")
+    print("------------------------------")
+
+    # 2. Handle incoming data safely
+    event_data = request.get_json(silent=True)
+    if event_data is None:
+        event_data = {"status": "default_payload_because_no_json_sent"}
+
+    # 3. Setup RabbitMQ Connection
+    user = 'admin'
+    password = 'password123'
+    credentials = pika.PlainCredentials(user, password)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='rmq-service',
+        credentials=credentials)
+    )
     channel = connection.channel()
 
-    # 2. Setup the special "Direct Reply-To" queue
-    # This queue is built-in and doesn't need to be declared
+    # 4. Setup variables for the Reply-To pattern
+    # result and reply_queue MUST be defined before basic_publish
     result = channel.queue_declare(queue='', exclusive=True, auto_delete=True)
     reply_queue = result.method.queue
-    
     corr_id = str(uuid.uuid4())
     response = None
+
+    #yoooooooo
 
     # Callback function to catch the reply
     def on_response(ch, method, props, body):
@@ -29,11 +49,10 @@ def match_event():
         if props.correlation_id == corr_id:
             response = json.loads(body)
 
-    # Listen on the temporary reply queue
+    # Start listening for the reply
     channel.basic_consume(queue=reply_queue, on_message_callback=on_response, auto_ack=True)
 
-    # 3. Send the request to the Topic Exchange
-    event_data = request.json
+    # 5. Send the request (Now reply_queue is defined!)
     channel.basic_publish(
         exchange='pst_exchange',
         routing_key='pst.matching.key',
@@ -44,9 +63,9 @@ def match_event():
         body=json.dumps(event_data)
     )
 
-    # 4. Wait/Block until the worker responds (with a timeout)
+    # 6. Wait for worker response
     count = 0
-    while response is None and count < 50:  # ~5 second timeout
+    while response is None and count < 50:
         connection.process_data_events(time_limit=0.1)
         count += 1
 

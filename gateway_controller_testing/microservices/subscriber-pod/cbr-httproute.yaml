@@ -31,6 +31,6 @@ spec:
     backendRefs:
       - group: ""
         kind: Service
-        name: rmq-Service
-        port: 5672
+        name: producer-service
+        port: 8080
         weight: 1
