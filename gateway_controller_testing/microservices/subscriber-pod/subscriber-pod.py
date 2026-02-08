@@ -8,11 +8,18 @@ app = Flask(__name__)
 # --- RABBITMQ WORKER LOGIC ---
 def start_rabbitmq_consumer():
     # Connect to RabbitMQ (Update host for Kubernetes)
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
+    user = 'admin'
+    password =  'password123'
+    credentials = pika.PlainCredentials(user, password)
+
+    connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='rmq-service',
+        credentials=credentials)
+    )
     channel = connection.channel()
 
     # Declare the exchange and queue to listen to
-    channel.exchange_declare(exchange='pst_exchange', exchange_type='topic')
+    channel.exchange_declare(exchange='pst_exchange', exchange_type='topic', durable=True)
     result = channel.queue_declare(queue='', exclusive=True)
     queue_name = result.method.queue
     channel.queue_bind(exchange='pst_exchange', queue=queue_name, routing_key='pst.matching.key')
