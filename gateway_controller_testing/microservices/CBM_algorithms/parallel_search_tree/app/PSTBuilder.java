@@ -9,7 +9,7 @@ public class PSTBuilder {
 
     public void matchEvents() throws Exception {
                 // 1. Read the events file
-        String eventContent = new String(Files.readAllBytes(Paths.get("..\\testing_data\\events.json")));
+        String eventContent = new String(Files.readAllBytes(Paths.get("./testing_data/events.json")));
         Map<String, Object> events = SimpleJson.parseObject(eventContent);
 
         // 2. Iterate through each event and match it
@@ -41,7 +41,7 @@ public class PSTBuilder {
 
         try {
             // 1. Read the JSON file
-            String content = new String(Files.readAllBytes(Paths.get("..\\testing_data\\subscriptions.json")));
+            String content = new String(Files.readAllBytes(Paths.get("./testing_data/subscriptions.json")));
             
             // 2. Parse using the built-in helper
             Map<String, Object> rootJson = SimpleJson.parseObject(content);

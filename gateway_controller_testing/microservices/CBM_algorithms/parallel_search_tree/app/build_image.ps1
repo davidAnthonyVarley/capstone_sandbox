@@ -1,0 +1,1 @@
+docker build -t davidAnthonyVarley/pst-pod:latest .
