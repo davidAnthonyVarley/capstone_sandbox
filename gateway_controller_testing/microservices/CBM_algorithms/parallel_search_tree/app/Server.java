@@ -26,9 +26,29 @@ public class Server {
                 PSTBuilder.PSTroot.match(eventData, results);
             }
 
-            // 4. Send response
-            String response = "Matched Subscriptions: " + results.toString();
-            exchange.sendResponseHeaders(200, response.length());
+            List<String> resultList = new ArrayList<>(results);
+
+            // 4. Build the JSON Response manually to match the requested schema
+            StringBuilder sb = new StringBuilder();
+            sb.append("{\n");
+            sb.append("  \"match_count\": ").append(resultList.size()).append(",\n");
+            sb.append("  \"subscriber_ids\": [");
+
+            for (int i = 0; i < resultList.size(); i++) {
+                sb.append("\"").append(resultList.get(i)).append("\"");
+                if (i < resultList.size() - 1) {
+                    sb.append(", ");
+                }
+            }
+            sb.append("]\n");
+            sb.append("}");
+            // --- FIX END ---
+
+            String response = sb.toString();
+
+            // Set Content-Type to application/json so Go recognizes it correctly
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();

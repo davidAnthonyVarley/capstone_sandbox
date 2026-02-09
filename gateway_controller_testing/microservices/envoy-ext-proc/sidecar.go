@@ -13,7 +13,9 @@ type server struct{}
 
 
 func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
+	log.Println(">>> New gRPC stream opened")
 	for {
+		log.Println("a new request in the gRPC stream(?)")
 		req, err := srv.Recv()
 		if err != nil {
 			return err
@@ -67,6 +69,7 @@ func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
 		}
 
 		if err := srv.Send(resp); err != nil {
+			log.Println("when envoy tried to respond to/process this request, it failed")
 			return err
 		}
 	}

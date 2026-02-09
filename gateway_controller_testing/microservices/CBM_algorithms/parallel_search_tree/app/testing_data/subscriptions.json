@@ -6,7 +6,7 @@
         {
           "attribute": "price",
           "operation": "greaterthan",
-          "value": 599.0
+          "value": 50099.0
         },
         {
           "attribute": "category",
