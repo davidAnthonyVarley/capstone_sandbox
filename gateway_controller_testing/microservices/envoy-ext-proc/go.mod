@@ -1,6 +1,6 @@
 module hello-world
 
-go 1.22
+go 1.24.0
 
 require (
 	github.com/envoyproxy/go-control-plane/envoy v1.36.0

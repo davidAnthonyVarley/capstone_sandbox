@@ -55,10 +55,15 @@ func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
 				},
 			}
 		} else {
-            // Fallback for any other phases (Body, Trailers, etc.)
 			log.Println("Processing other phase - sending default response")
-            // You must determine which phase this is to send the correct empty response
-            // or modify your EnvoyExtensionPolicy to only send what you handle.
+			// Provide a generic valid response to prevent nil pointer panics
+			resp = &extproc.ProcessingResponse{
+				Response: &extproc.ProcessingResponse_RequestHeaders{
+					RequestHeaders: &extproc.HeadersResponse{
+						Response: &extproc.CommonResponse{},
+					},
+				},
+			}
 		}
 
 		if err := srv.Send(resp); err != nil {
@@ -69,6 +74,8 @@ func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
 
 
 func main() {
+	log.Println("hello")
+	log.Println("FORCE LOG: Sidecar starting up...")
 	lis, err := net.Listen("tcp", ":9002")
 	if err != nil {
     	log.Fatal(err)

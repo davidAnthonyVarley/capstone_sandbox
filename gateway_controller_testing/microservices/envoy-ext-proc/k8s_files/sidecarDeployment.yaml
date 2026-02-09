@@ -16,10 +16,10 @@ spec:
       containers:
       - name: processor
         image: davidAnthonyVarley/envoy-ext-proc:latest
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9002
         resources:
           limits:
-            cpu: "100m"
+            cpu: "200m"
             memory: "256Mi"

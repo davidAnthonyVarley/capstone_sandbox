@@ -1,7 +1,7 @@
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyExtensionPolicy
 metadata:
-  name: envoycbr-httpfilter
+  name: envoy-httpfilter
   namespace: default
 spec:
 
@@ -14,7 +14,7 @@ spec:
 #the internal envoy filter name for extProc == "envoy.filters.http.ext_proc", but that doesn't work here
   extProc:
     - backendRefs:
-        - name: envoycbr-httpfilter-service
+        - name: envoycbr-httpfilter-sidecar-service
           port: 9002
       processingMode:
         request: {}

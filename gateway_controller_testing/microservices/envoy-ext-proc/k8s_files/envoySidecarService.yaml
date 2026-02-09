@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: envoyCBR-HTTPFilter
+    app: envoycbr-httpfilter-sidecar
   ports:
   - name: grpc
     protocol: TCP
