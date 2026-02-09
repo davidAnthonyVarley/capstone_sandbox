@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Compile all .java files in the directory
-RUN javac *.java
+RUN javac -cp "bin" *.java
 
 # Stage 2: Create the lightweight runtime image
 FROM eclipse-temurin:17-jre-alpine

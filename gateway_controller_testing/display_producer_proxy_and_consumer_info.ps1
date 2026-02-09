@@ -1,3 +1,4 @@
+$GATEWAY_HOST=(minikube ip)
 Write-Host "realcurl -vk --http3 "https://www.example.com/mq" --resolve "www.example.com:443:$GATEWAY_HOST"; 
 " -ForegroundColor Cyan; 
 realcurl -vk --http3 "https://www.example.com/mq" --resolve "www.example.com:443:$GATEWAY_HOST"; 

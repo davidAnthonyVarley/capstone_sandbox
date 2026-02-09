@@ -9,3 +9,5 @@ Invoke-RestMethod -Uri "http://localhost:8081/match" `
                              "status": "active",
                              "type": "rain"
                           }'
+
+Invoke-RestMethod -Uri "http://localhost:8081/match" -Method Post -ContentType "application/json" -Body '{"price": 600.0, "category": "hardware", "location": "NewYork", "severity": 10.0, "status": "active", "type": "rain"}';

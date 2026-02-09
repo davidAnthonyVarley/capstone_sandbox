@@ -1,0 +1,15 @@
+$GATEWAY_HOST=(minikube ip);
+Write-Host "realcurl -vk --http3 "https://www.example.com/mq" --resolve "www.example.com:443:$GATEWAY_HOST"; 
+" -ForegroundColor Cyan; 
+realcurl -vk --http3 "https://www.example.com/mq" --resolve "www.example.com:443:$GATEWAY_HOST"; 
+Write-Host "#################"; 
+Start-Sleep -Seconds 3;
+Write-Host "kubectl logs -l app=pst-pod" -ForegroundColor Cyan; 
+kubectl logs -l app=pst-pod;
+Write-Host "#################"; 
+Write-Host "kubectl logs -l app=siena-pod -c siena-main-server" -ForegroundColor Cyan; 
+kubectl logs -l app=siena-pod -c siena-main-server;
+Write-Host "---"; 
+Write-Host "kubectl logs -l app=siena-pod -c siena-dvd-server" -ForegroundColor Cyan; 
+kubectl logs -l app=siena-pod -c siena-dvd-server;
+Write-Host "#################"; 

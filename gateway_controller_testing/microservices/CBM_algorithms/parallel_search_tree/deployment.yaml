@@ -21,14 +21,14 @@ spec:
       - name: pst-pod
         image: davidAnthonyVarley/pst-pod:latest
 
-        command: ["python3--------------------------needs to change to java command + certs?-------"]
+        command: ["java", "Server"]
         volumeMounts:
           - name: cert-volume
             mountPath: /certs
 
         imagePullPolicy: IfNotPresent
         ports:
-          - containerPort: 8081
+          - containerPort: 8080
 
 
       
