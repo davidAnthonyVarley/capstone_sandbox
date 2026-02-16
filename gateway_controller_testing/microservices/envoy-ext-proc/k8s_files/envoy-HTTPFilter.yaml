@@ -17,6 +17,9 @@ spec:
         - name: envoycbr-httpfilter-sidecar-service
           port: 9002
       processingMode:
-        request: {}
+        request:
+          attributes: 
+            - "source.address"
+            - "request.path"
         #response: 
         #  body: Streamed 

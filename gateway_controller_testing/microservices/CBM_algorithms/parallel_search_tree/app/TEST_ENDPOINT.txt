@@ -11,3 +11,6 @@ Invoke-RestMethod -Uri "http://localhost:8081/match" `
                           }'
 
 Invoke-RestMethod -Uri "http://localhost:8081/match" -Method Post -ContentType "application/json" -Body '{"price": 600.0, "category": "hardware", "location": "NewYork", "severity": 10.0, "status": "active", "type": "rain"}';
+Invoke-RestMethod -Uri "http://pst-service:8080/match" -Method Post -ContentType "application/json" -Body '{"price": 600.0, "category": "hardware", "location": "NewYork", "severity": 10.0, "status": "active", "type": "rain"}';
+
+curl -v -X POST http://pst-service:8080/match -H "Content-Type: application/json" -d '{"price": 600.0, "category": "hardware", "location": "NewYork", "severity": 10.0, "status": "active", "type": "rain"}'

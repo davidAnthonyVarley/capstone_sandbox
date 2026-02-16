@@ -1,0 +1,18 @@
+{
+  "event_for_subscription_5": {
+    "delivery_mode": "lightweight_summary",
+    "include_metadata": "false",
+    "note": "Triggers 1MB response"
+  },
+  "event_for_subscription_6": {
+    "data_verbosity": "detailed_audit_log",
+    "compression_enabled": "true",
+    "note": "Triggers 10MB response"
+  },
+  "event_for_subscription_7": {
+    "transfer_type": "bulk_binary_blob",
+    "storage_tier": "cold_archive",
+    "priority": 10.0,
+    "note": "Triggers 100MB response"
+  }
+}

@@ -24,7 +24,7 @@ def start_rabbitmq_consumer():
     channel = connection.channel()
 
     # Declare the exchange and queue to listen to
-    channel.exchange_declare(exchange='pst_exchange', exchange_type='topic', durable=True)
+    channel.exchange_declare(exchange='cbr_exchange', exchange_type='topic', durable=True)
     result = channel.queue_declare(queue='', exclusive=True)
     queue_name = result.method.queue
     channel.queue_bind(exchange='pst_exchange', queue=queue_name, routing_key='pst.matching.key')
@@ -48,7 +48,7 @@ def start_rabbitmq_consumer():
 
         # 3. Prepare the response
         response_data = {
-            "message": "Hello from PST Worker!",
+            "message": "Hello from subscriber that got the message from the message queue!",
             "status": "matched",
             "worker_debug": {
                 "headers_received": original_headers,

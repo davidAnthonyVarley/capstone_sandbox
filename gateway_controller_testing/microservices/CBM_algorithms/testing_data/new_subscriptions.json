@@ -1,0 +1,44 @@
+{
+  "subscriptions": [
+    {
+      "id": "5",
+      "predicates": [
+        {
+          "attribute": "delivery_mode",
+          "operation": "equal",
+          "value": "lightweight_summary"
+        },
+        {
+          "attribute": "include_metadata",
+          "operation": "equal",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "predicates": [
+        {
+          "attribute": "data_verbosity",
+          "operation": "equal",
+          "value": "detailed_audit_log"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "predicates": [
+        {
+          "attribute": "transfer_type",
+          "operation": "equal",
+          "value": "bulk_binary_blob"
+        },
+        {
+          "attribute": "storage_tier",
+          "operation": "equal",
+          "value": "cold_archive"
+        }
+      ]
+    }
+  ]
+}

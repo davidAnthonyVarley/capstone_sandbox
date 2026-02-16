@@ -25,18 +25,27 @@ type server struct{}
 
 // Helper function moved from find_subscribers.go
 func find_relevant_subscribers(payload []byte) (*MatchResponse, error) {
-	// Ensure this points to your SienaServer port
-	url := "http://localhost:8080/match"
+	// Updated URL to the one you verified
+	url := "http://pst-service:8080/match"
+	//url := "http://localhost:8080/match"
+
+	log.Printf("Sidecar: Sending payload to Siena: %s", string(payload))
 
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
+		log.Printf("Sidecar ERROR: Failed to reach pst-service: %v", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	body, _ := io.ReadAll(resp.Body)
+	log.Printf("Sidecar: Received raw response from Siena: %s", string(body))
+
 	var result MatchResponse
-	json.Unmarshal(body, &result)
+	if err := json.Unmarshal(body, &result); err != nil {
+		log.Printf("Sidecar ERROR: Failed to unmarshal JSON: %v", err)
+		return nil, err
+	}
 
 	return &result, nil
 }
@@ -49,31 +58,52 @@ func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
 			return err
 		}
 
+		// --- NEW: EXTRACTION OF ATTRIBUTES ---
+		// This captures the source.address and request.path you added to YAML
+		//attrs := req.GetAttributes()
+		//if attrs != nil {
+		//	if addr, ok := attrs["source.address"]; ok {
+		//		log.Printf("Sidecar: Attribute [source.address] = %s", addr.GetFields()["value"].GetStringValue())
+		//	}
+		//}
+
 		resp := &extproc.ProcessingResponse{}
 
 		if headers := req.GetRequestHeaders(); headers != nil {
 			log.Println("Processing Request Headers - Identifying Subscribers")
 
-			// 1. Prepare a dummy or extracted payload
-			// In a real scenario, you'd extract these values from 'headers'
-			//payloadMap := map[string]interface{}{
-			//	"price":    600.0,
-			//	"category": "hardware",
-			//	"location": "NewYork",
-			//	"severity": 10.0,
-			//	"status":   "active",
-			//	"type":     "rain",
-			//}
-			//payload, _ := json.Marshal(payloadMap)
 			allHeaders := make(map[string]string)
-    		for _, h := range headers.GetHeaders().GetHeaders() {
-    		    allHeaders[h.Key] = h.Value
-    		}
+			for _, h := range headers.GetHeaders().GetHeaders() {
+			    log.Printf("Sidecar: Received Header-value [%s]", h)
+			    log.Printf("Sidecar: Received h.GetKey() [%s]",h.GetKey())
+			    log.Printf("Sidecar: Received h.GetValue() [%s]",h.GetValue())
+
+			    k := h.GetKey()
+			
+			    // 1. Try to get the string value first
+			    v := h.GetValue()
+			
+			    // 2. If it's empty, check the RawValue (bytes)
+			    if v == "" && len(h.GetRawValue()) > 0 {
+			    	log.Printf("v == '' && len(h.GetRawValue()) > 0, so try to stringify raw bytes")
+
+			        v = string(h.GetRawValue()) // Convert []byte to string
+			    	log.Printf("stringified raw bytes == [%s]", v)
+
+			    }
+			
+			    log.Printf("Sidecar: Received Header [%s] = [%s]", k, v)
+			
+			    // 3. Store in the map (lowercase keys are safer for lookups)
+			    allHeaders[strings.ToLower(k)] = v
+			}
+			
+			// Use lowercase key check for safety
+			eventDataString := allHeaders["x-event-cbr-data"]
+			if eventDataString == "" {
+				log.Println("Sidecar WARNING: x-event-cbr-data header is MISSING or EMPTY")
+			}
 		
-    		// 2. Get the specific header string
-    		eventDataString := allHeaders["x-event-cbr-data"]
-		
-    		// 3. Convert string to []byte for your matching function
     		payload := []byte(eventDataString)
 
 			// 2. Call the matching logic
@@ -126,13 +156,13 @@ func (s *server) Process(srv extproc.ExternalProcessor_ProcessServer) error {
 func main() {
 	log.Println("hello")
 	log.Println("FORCE LOG: Sidecar starting up...")
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", ":9002")
 	if err != nil {
     	log.Fatal(err)
 	}
 
 	s := grpc.NewServer()
 	extproc.RegisterExternalProcessorServer(s, &server{})
-	log.Println("gRPC Server listening on :50051")
+	log.Println("gRPC Server listening on :9002")
 	s.Serve(lis)
 }
