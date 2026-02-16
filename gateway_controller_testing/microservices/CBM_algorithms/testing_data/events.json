@@ -1,22 +1,21 @@
 {
-  "event_01": {
-    "price": 600.0,
-    "category": "hardware",
-    "location": "NewYork",
-    "severity": 10.0,
-    "status": "active",
-    "type": "rain"
+  "event_05": {
+    "delivery_mode": "lightweight_summary",
+    "include_metadata": "false",
+    "data_size": "1MB",
+    "note": "Triggers 1MB response"
   },
-  "event_02": {
-    "price": 100.0,
-    "category": "software",
-    "location": "London",
-    "severity": 2.0,
-    "status": "inactive",
-    "type": "sunny"
+  "event_06": {
+    "data_verbosity": "detailed_audit_log",
+    "compression_enabled": "true",
+    "data_size": "10MB",
+    "note": "Triggers 10MB response"
   },
-  "event_03": {
-    "price": 200.0,
-    "type": "rain"
+  "event_07": {
+    "transfer_type": "bulk_binary_blob",
+    "storage_tier": "cold_archive",
+    "priority": 10.0,
+    "data_size": "100MB",
+    "note": "Triggers 100MB response"
   }
 }

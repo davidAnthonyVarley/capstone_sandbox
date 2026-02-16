@@ -1,0 +1,1 @@
+docker build -t davidAnthonyVarley/medium-sized-data-server:latest .;

@@ -1,0 +1,1 @@
+docker build -t davidAnthonyVarley/small-sized-data-server--1mb:latest .;

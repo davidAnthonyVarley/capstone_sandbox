@@ -1,6 +1,6 @@
 docker build -t davidAnthonyVarley/pst-pod:latest .\microservices\CBM_algorithms\parallel_search_tree\app;
 docker build -t davidAnthonyVarley/siena-pod:latest .\microservices\CBM_algorithms\siena\;
-docker build -t davidAnthonyVarley/envoy-ext-proc:latest .\microservices\envoy-ext-proc\;
+#docker build -t davidAnthonyVarley/envoy-ext-proc:latest .\microservices\envoy-ext-proc\;
 
 kubectl delete deployment pst-pod;  
 kubectl delete svc pst-service;  

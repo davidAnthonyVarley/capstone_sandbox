@@ -1,0 +1,1 @@
+docker build -t davidAnthonyVarley/large-sized-data-server:latest .;

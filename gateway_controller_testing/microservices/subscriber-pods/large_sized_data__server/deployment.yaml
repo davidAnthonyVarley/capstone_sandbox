@@ -6,11 +6,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sub-7
+      app: subscriber-7-100mb
   template:
     metadata:
       labels:
-        app: sub-7
+        app: subscriber-7-100mb
     spec:
       containers:
       - name: subscriber

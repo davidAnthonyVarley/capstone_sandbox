@@ -1,9 +1,46 @@
 import pika
 import json, time
-import threading
+import threading, os
 from flask import Flask, request
+import base64
 
 app = Flask(__name__)
+
+SUB_ID = os.getenv("SUB_ID")
+
+# 1. Create a global variable to hold the cached data
+CACHED_FILE_DATA = None
+
+def load_data_to_memory():
+    global CACHED_FILE_DATA
+    file_path = "TBD"
+    if (SUB_ID == "subA"):
+        file_path = "/mnt/testing-data/1mb_test.bin"
+    elif (SUB_ID == "subB"):
+        file_path = "/mnt/testing-data/10mb_test.bin"
+    elif (SUB_ID == "subC"):
+        file_path = "/mnt/testing-data/100mb_test.bin"
+    else:
+        print("*")
+        print("*")
+        print("*")
+        print(f"ERROR: VOLUME DATA NOT FOUND FOR SUB_ID == {SUB_ID}")
+        print("*")
+        print("*")
+        print("*")
+
+    
+    try:
+        if os.path.exists(file_path):
+            print(f"--- Loading {file_path} into memory ---", flush=True)
+            with open(file_path, "rb") as f:
+                # Store as Base64 string to be ready for JSON responses 
+                CACHED_FILE_DATA = base64.b64encode(f.read()).decode('utf-8')
+            print(f"--- Successfully cached {len(CACHED_FILE_DATA)} bytes ---", flush=True)
+        else:
+            print(f"--- Warning: File not found at {file_path} ---", flush=True)
+    except Exception as e:
+        print(f"--- Error during boot-load: {e} ---", flush=True)
 
 # --- RABBITMQ WORKER LOGIC ---
 def start_rabbitmq_consumer():
@@ -27,7 +64,7 @@ def start_rabbitmq_consumer():
     channel.exchange_declare(exchange='cbr_exchange', exchange_type='topic', durable=True)
     result = channel.queue_declare(queue='', exclusive=True)
     queue_name = result.method.queue
-    channel.queue_bind(exchange='pst_exchange', queue=queue_name, routing_key='pst.matching.key')
+    channel.queue_bind(exchange='cbr_exchange', queue=queue_name, routing_key=SUB_ID)
 
     def on_request(ch, method, props, body):
         # 1. Parse the JSON sent by the Producer
@@ -48,17 +85,16 @@ def start_rabbitmq_consumer():
 
         # 3. Prepare the response
         response_data = {
-            "message": "Hello from subscriber that got the message from the message queue!",
-            "status": "matched",
+            "message": f"Hello from subscriber {SUB_ID}!",
+            "status": "success" if CACHED_FILE_DATA else "no_data_cached",
+            "file_data": CACHED_FILE_DATA, # Fast memory access
             "worker_debug": {
-                "headers_received": original_headers,
-                "original_body": incoming_data.get("payload", {})
+                "original_headers": original_headers,
+                "source": "memory_cache"
             }
         }
 
-        # 4. Check if the Producer requested a reply
         if props.reply_to:
-            print(f" [->] Replying to {props.reply_to}")
             ch.basic_publish(
                 exchange='',
                 routing_key=props.reply_to,
@@ -66,6 +102,7 @@ def start_rabbitmq_consumer():
                 body=json.dumps(response_data)
             )
 
+        print("the message has been sent off from the server")
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     channel.basic_qos(prefetch_count=1)
@@ -79,8 +116,20 @@ def start_rabbitmq_consumer():
 def status():
     return {"status": "Worker is running"}, 200
 
+
+
+# Add this near the top of subscriber-pod.py
+def check_storage():
+    mount_path = "/mnt/testing_data"  # This is where we will mount it in K8s
+    if os.path.exists(mount_path):
+        print(f"--- Storage Found at {mount_path} ---", flush=True)
+        print(f"Files: {os.listdir(mount_path)}", flush=True)
+    else:
+        print(f"--- Storage NOT Found at {mount_path} ---", flush=True)
+
+# Call it in your main block
 if __name__ == "__main__":
-    # Start RabbitMQ in a background thread so Flask can still run
+    check_storage() # Run the check on startup
+    load_data_to_memory() # Run the check on startup
     threading.Thread(target=start_rabbitmq_consumer, daemon=True).start()
-    
     app.run(host="0.0.0.0", port=3000)

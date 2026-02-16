@@ -1,42 +1,32 @@
 {
   "subscriptions": [
     {
-      "id": "5",
+      "id": "subA",
       "predicates": [
         {
-          "attribute": "delivery_mode",
+          "attribute": "data_size",
           "operation": "equal",
-          "value": "lightweight_summary"
-        },
-        {
-          "attribute": "include_metadata",
-          "operation": "equal",
-          "value": "false"
+          "value": "1MB"
         }
       ]
     },
     {
-      "id": "6",
+      "id": "subB",
       "predicates": [
         {
-          "attribute": "data_verbosity",
+          "attribute": "data_size",
           "operation": "equal",
-          "value": "detailed_audit_log"
+          "value": "10MB"
         }
       ]
     },
     {
-      "id": "7",
+      "id": "subC",
       "predicates": [
         {
-          "attribute": "transfer_type",
+          "attribute": "data_size",
           "operation": "equal",
-          "value": "bulk_binary_blob"
-        },
-        {
-          "attribute": "storage_tier",
-          "operation": "equal",
-          "value": "cold_archive"
+          "value": "100MB"
         }
       ]
     }

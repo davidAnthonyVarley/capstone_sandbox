@@ -17,6 +17,9 @@ spec:
         - name: cert-volume
           secret:
             secretName: example-cert
+        - name: testing-data-volume
+          persistentVolumeClaim:
+            claimName: testing-data-pvc
       containers:
       - name: subscriber-pod
         image: davidAnthonyVarley/subscriber-pod:latest
@@ -29,6 +32,8 @@ spec:
         volumeMounts:
           - name: cert-volume
             mountPath: /certs
+          - name: testing-data-volume
+            mountPath: /mnt/testing-data
 
         imagePullPolicy: IfNotPresent
         ports:

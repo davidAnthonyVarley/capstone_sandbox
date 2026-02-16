@@ -3,10 +3,11 @@ kind: PersistentVolume
 metadata:
   name: testing-data-pv
 spec:
+  storageClassName: manual
   capacity:
     storage: 200Mi
   accessModes:
     - ReadOnlyMany
-  persistentVolumeReclaimPolicy: Retain
+  persistentVolumeReclaimPolicy: Delete
   hostPath:
-    path: ./testing_data/
+    path: /data/testing_data/

@@ -1,57 +1,32 @@
 {
   "subscriptions": [
     {
-      "id": "1",
+      "id": "subA",
       "predicates": [
         {
-          "attribute": "price",
-          "operation": "greaterthan",
-          "value": 50099.0
-        },
-        {
-          "attribute": "category",
+          "attribute": "data_size",
           "operation": "equal",
-          "value": "hardware"
+          "value": "1MB"
         }
       ]
     },
     {
-      "id": "2",
+      "id": "subB",
       "predicates": [
         {
-          "attribute": "location",
+          "attribute": "data_size",
           "operation": "equal",
-          "value": "NewYork"
-        },
-        {
-          "attribute": "severity",
-          "operation": "greaterthan",
-          "value": 5.0
-        },
-        {
-          "attribute": "status",
-          "operation": "equal",
-          "value": "active"
+          "value": "10MB"
         }
       ]
     },
     {
-      "id": "3",
+      "id": "subC",
       "predicates": [
         {
-          "attribute": "type",
+          "attribute": "data_size",
           "operation": "equal",
-          "value": "rain"
-        }
-      ]
-    },
-    {
-      "id": "4",
-      "predicates": [
-        {
-          "attribute": "price",
-          "operation": "greaterthan",
-          "value": 150.0
+          "value": "100MB"
         }
       ]
     }

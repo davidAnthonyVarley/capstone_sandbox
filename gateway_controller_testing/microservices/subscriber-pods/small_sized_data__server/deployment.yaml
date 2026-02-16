@@ -1,28 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: subscriber-5-1mb
+  name: small-sized-data-server--1mb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sub-5
+      app: small-sized-data-server--1mb
   template:
     metadata:
       labels:
-        app: sub-5
+        app: small-sized-data-server--1mb
     spec:
       containers:
       - name: subscriber
-        image: davidAnthonyVarley/small-sized-data--server:latest # The image from your Dockerfile [cite: 1]
+        image: davidAnthonyVarley/small-sized-data-server--1mb:latest # The image from your Dockerfile [cite: 1]
+        imagePullPolicy: IfNotPresent
         env:
         - name: SUB_ID
-          value: "5" # Tells the pod to use ID 5 and bind to 'sub.5'
+          value: "subA" 
         volumeMounts:
-        - name: data-volume
-          mountPath: /data/test_files
+        - name: testing-data-volume
+          mountPath: /mnt/testing-data
           readOnly: true
       volumes:
-      - name: data-volume
+      - name: testing-data-volume
         persistentVolumeClaim:
-          claimName: test-data-pvc
+          claimName: testing-data-pvc
