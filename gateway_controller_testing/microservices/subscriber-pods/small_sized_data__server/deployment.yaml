@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriber-5-1mb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sub-5
+  template:
+    metadata:
+      labels:
+        app: sub-5
+    spec:
+      containers:
+      - name: subscriber
+        image: davidAnthonyVarley/small-sized-data--server:latest # The image from your Dockerfile [cite: 1]
+        env:
+        - name: SUB_ID
+          value: "5" # Tells the pod to use ID 5 and bind to 'sub.5'
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data/test_files
+          readOnly: true
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: test-data-pvc
