@@ -10,4 +10,4 @@ spec:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Delete
   hostPath:
-    path: /data/testing_data/
+    path: /mnt/testing-data

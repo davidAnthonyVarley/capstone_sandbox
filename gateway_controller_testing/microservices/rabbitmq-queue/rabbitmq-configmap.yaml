@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-config
+data:
+  rabbitmq.conf: |
+    # Increase max message size to 200MB to accommodate 100MB files + Base64 overhead
+    max_message_size = 200000000

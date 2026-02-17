@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 WORKDIR /app
-COPY ../ .
+COPY . .
 RUN pip install flask pika
 EXPOSE 3000
-ENV SUB_ID=medium
+ENV SUB_ID=subB
 CMD ["python3", "subscriber-pod.py"]

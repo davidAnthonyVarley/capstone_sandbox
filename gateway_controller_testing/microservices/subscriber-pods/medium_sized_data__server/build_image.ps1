@@ -1,1 +1,1 @@
-docker build -t davidAnthonyVarley/medium-sized-data-server:latest .;
+docker build -t davidAnthonyVarley/medium-sized-data-server--10mb:latest .;

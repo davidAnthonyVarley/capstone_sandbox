@@ -1,28 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: subscriber-7-100mb
+  name: large-sized-data-server--100mb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: subscriber-7-100mb
+      app: large-sized-data-server--100mb
   template:
     metadata:
       labels:
-        app: subscriber-7-100mb
+        app: large-sized-data-server--100mb
     spec:
       containers:
       - name: subscriber
-        image: davidAnthonyVarley/large-sized-data--server:latest # The image from your Dockerfile [cite: 1]
+        image: davidAnthonyVarley/large-sized-data-server--100mb:latest # The image from your Dockerfile [cite: 1]
+        imagePullPolicy: IfNotPresent
         env:
         - name: SUB_ID
-          value: "7" # Tells the pod to use ID 7 and bind to 'sub.7'
+          value: "subC" 
         volumeMounts:
-        - name: data-volume
-          mountPath: /data/test_files
+        - name: testing-data-volume
+          mountPath: /mnt/testing-data
           readOnly: true
       volumes:
-      - name: data-volume
+      - name: testing-data-volume
         persistentVolumeClaim:
-          claimName: test-data-pvc
+          claimName: testing-data-pvc
