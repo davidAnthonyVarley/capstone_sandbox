@@ -1,1 +1,1 @@
- minikube mount C:\Users\david\capstone_sandbox\gateway_controller_testing\microservices\subscriber-pods\testing_data:/mnt/testing-data
+ minikube mount C:\Users\david\capstone_sandbox\gateway_controller_testing\microservices\subscriber-pods\testing-data:/mnt/testing-data
