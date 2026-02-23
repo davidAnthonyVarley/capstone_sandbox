@@ -11,8 +11,8 @@ if len(sys.argv) < 3:
     print("Usage: python run_experiment.py <concurrency_count> <data_size>")
     sys.exit(1)
 
-CONCURRENCY_COUNT = int(sys.argv[1])
-DATA_SIZE = sys.argv[2]
+CONCURRENCY_COUNT = 4#int(sys.argv[1])
+DATA_SIZE = "1MB" #sys.argv[2]
 
 GATEWAY_HOST = "192.168.59.109"
 PROM_URL = "http://localhost:9090/api/v1/query_range"
@@ -64,8 +64,16 @@ total_runtime_ms = (time.perf_counter() - start_timer) * 1000
 
 # --- STEP 2: WAIT FOR PROMETHEUS SCRAPE ---
 # Wait to ensure metrics are ingested before querying
-print(f"Waiting 15s for Prometheus to collect metrics...")
-time.sleep(15)
+sleep_period = -1
+if (DATA_SIZE == "1MB"):
+    sleep_period = 8
+elif (DATA_SIZE == "10MB"):
+    sleep_period = 16
+elif (DATA_SIZE == "100MB"):
+    sleep_period = 45
+
+print(f"Waiting {sleep_period}s for Prometheus to collect metrics...")
+time.sleep(sleep_period)
 
 # --- STEP 3: QUERY PROMETHEUS ---
 def fetch_metrics(query):
