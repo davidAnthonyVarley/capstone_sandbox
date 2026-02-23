@@ -1,6 +1,6 @@
 # Define the experiment matrix
-$DataSizes = @("1MB", "10MB")
-$ConcurrencyLevels = @(2, 3, 4, 5)
+$DataSizes = @("1MB")
+$ConcurrencyLevels = @(0, 1, 2, 3, 4, 5)
 
 Write-Host "--- Starting Experiment Matrix ---" -ForegroundColor Cyan
 
