@@ -1,0 +1,83 @@
+{
+    "metadata": {
+        "timestamp": "20260223_001126",
+        "concurrency_target": 10,
+        "actual_requests": 10,
+        "success_count": 10,
+        "failure_count": 0,
+        "total_test_duration_ms": 1697.35,
+        "data_size": "1MB"
+    },
+    "individual_requests": [
+        {
+            "request_id": 5,
+            "status_code": "200",
+            "connection_setup_ms": 23.907,
+            "time_to_first_byte_ms": 671.7220000000001,
+            "total_request_time_ms": 762.7779999999999
+        },
+        {
+            "request_id": 10,
+            "status_code": "200",
+            "connection_setup_ms": 8.126,
+            "time_to_first_byte_ms": 796.455,
+            "total_request_time_ms": 881.74
+        },
+        {
+            "request_id": 4,
+            "status_code": "200",
+            "connection_setup_ms": 11.054,
+            "time_to_first_byte_ms": 856.6629999999999,
+            "total_request_time_ms": 941.012
+        },
+        {
+            "request_id": 8,
+            "status_code": "200",
+            "connection_setup_ms": 6.527,
+            "time_to_first_byte_ms": 842.044,
+            "total_request_time_ms": 1089.105
+        },
+        {
+            "request_id": 1,
+            "status_code": "200",
+            "connection_setup_ms": 29.731,
+            "time_to_first_byte_ms": 947.252,
+            "total_request_time_ms": 1138.654
+        },
+        {
+            "request_id": 7,
+            "status_code": "200",
+            "connection_setup_ms": 6.394,
+            "time_to_first_byte_ms": 1181.953,
+            "total_request_time_ms": 1297.085
+        },
+        {
+            "request_id": 6,
+            "status_code": "200",
+            "connection_setup_ms": 8.861,
+            "time_to_first_byte_ms": 1128.301,
+            "total_request_time_ms": 1357.712
+        },
+        {
+            "request_id": 9,
+            "status_code": "200",
+            "connection_setup_ms": 7.296,
+            "time_to_first_byte_ms": 1322.228,
+            "total_request_time_ms": 1411.2769999999998
+        },
+        {
+            "request_id": 2,
+            "status_code": "200",
+            "connection_setup_ms": 30.286,
+            "time_to_first_byte_ms": 1181.1000000000001,
+            "total_request_time_ms": 1460.034
+        },
+        {
+            "request_id": 3,
+            "status_code": "200",
+            "connection_setup_ms": 8.944,
+            "time_to_first_byte_ms": 1392.8,
+            "total_request_time_ms": 1486.342
+        }
+    ]
+}
