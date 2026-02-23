@@ -66,11 +66,11 @@ total_runtime_ms = (time.perf_counter() - start_timer) * 1000
 # Wait to ensure metrics are ingested before querying
 sleep_period = -1
 if (DATA_SIZE == "1MB"):
-    sleep_period = 4
+    sleep_period = 6
 elif (DATA_SIZE == "10MB"):
     sleep_period = 16
 elif (DATA_SIZE == "100MB"):
-    sleep_period = 45
+    sleep_period = 35
 
 print(f"Waiting {sleep_period}s for Prometheus to collect metrics...")
 time.sleep(sleep_period)

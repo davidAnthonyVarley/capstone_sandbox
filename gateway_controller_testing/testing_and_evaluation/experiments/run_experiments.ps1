@@ -5,7 +5,7 @@ Write-Host "--- Starting Experiment Matrix ---" -ForegroundColor Cyan
 
 foreach ($size in $DataSizes) {
     $level = 0;
-    while ($level -lt 5) {
+    while ($level -lt 31) {
         Write-Host "Running: Size=$size, Concurrency=$level" -ForegroundColor Yellow
         
         # Call the Python script with arguments
