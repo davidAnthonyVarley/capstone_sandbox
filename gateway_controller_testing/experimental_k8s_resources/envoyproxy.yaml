@@ -1,0 +1,34 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: webtransport-config
+  namespace: envoy-gateway-system
+spec:
+  bootstrap:
+    type: Replace
+    value: |
+      admin:
+        address:
+          socket_address:
+            address: 0.0.0.0
+            port_value: 19000
+  logging:
+    level:
+      default: warn
+  telemetry:
+    accessLog:
+      settings:
+      - format:
+          text: "[%START_TIME%] %REQ(:METHOD)% %REQ(:PROTOCOL)% %RESPONSE_CODE%\n"
+          type: Text
+        sinks:
+        - file:
+            path: /dev/stdout
+          type: File
+    tracing:
+      provider:
+        type: OpenTelemetry
+        backendRefs:
+        - name: jaeger-collector
+          namespace: default
+          port: 4317

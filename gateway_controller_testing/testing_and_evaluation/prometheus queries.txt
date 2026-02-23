@@ -1,0 +1,2 @@
+container_memory_working_set_bytes{pod=~".*(pst|sidecar|siena|producer|rabbit|small|medium|large).*", container!=""} / 1024 / 1024
+

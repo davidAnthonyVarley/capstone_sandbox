@@ -6,8 +6,8 @@ url = "http://localhost:9090/api/v1/query_range"
 params = {
     "query": 'container_memory_working_set_bytes{pod=~".*small.*"}',
     # We use a 3-minute window to see the "spike" in the middle
-    "start": "2026-02-22T21:30:00Z", 
-    "end":   "2026-02-22T23:59:00Z",
+    "start": "2026-02-22T23:00:00Z", 
+    "end":   "2026-02-23T01:00:00Z",
     "step":  "5s" # Assuming you set your scrape interval to 5s
 }
 
