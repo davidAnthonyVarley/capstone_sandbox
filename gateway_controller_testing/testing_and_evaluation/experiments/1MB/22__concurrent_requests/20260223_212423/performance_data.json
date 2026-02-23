@@ -1,0 +1,441 @@
+{
+    "test_metadata": {
+        "timestamp": "20260223_212423",
+        "data_size": "1MB",
+        "concurrency": 22,
+        "success_rate": 0.4545,
+        "total_execution_ms": 1720.14
+    },
+    "network_performance": [
+        {
+            "request_id": 5,
+            "status_code": "504",
+            "conn_ms": 5.8950000000000005,
+            "ttfb_ms": 251.272,
+            "total_ms": 251.51299999999998
+        },
+        {
+            "request_id": 4,
+            "status_code": "504",
+            "conn_ms": 4.836,
+            "ttfb_ms": 230.625,
+            "total_ms": 230.733
+        },
+        {
+            "request_id": 8,
+            "status_code": "504",
+            "conn_ms": 25.788999999999998,
+            "ttfb_ms": 274.913,
+            "total_ms": 275.066
+        },
+        {
+            "request_id": 20,
+            "status_code": "504",
+            "conn_ms": 5.329000000000001,
+            "ttfb_ms": 226.376,
+            "total_ms": 226.519
+        },
+        {
+            "request_id": 2,
+            "status_code": "504",
+            "conn_ms": 204.035,
+            "ttfb_ms": 434.533,
+            "total_ms": 434.671
+        },
+        {
+            "request_id": 3,
+            "status_code": "504",
+            "conn_ms": 6.021,
+            "ttfb_ms": 405.20099999999996,
+            "total_ms": 405.351
+        },
+        {
+            "request_id": 15,
+            "status_code": "504",
+            "conn_ms": 5.4799999999999995,
+            "ttfb_ms": 276.743,
+            "total_ms": 276.89000000000004
+        },
+        {
+            "request_id": 18,
+            "status_code": "504",
+            "conn_ms": 7.065,
+            "ttfb_ms": 313.533,
+            "total_ms": 313.65900000000005
+        },
+        {
+            "request_id": 6,
+            "status_code": "504",
+            "conn_ms": 4.401000000000001,
+            "ttfb_ms": 367.387,
+            "total_ms": 367.52000000000004
+        },
+        {
+            "request_id": 10,
+            "status_code": "504",
+            "conn_ms": 4.278,
+            "ttfb_ms": 403.561,
+            "total_ms": 403.685
+        },
+        {
+            "request_id": 22,
+            "status_code": "504",
+            "conn_ms": 5.313,
+            "ttfb_ms": 268.565,
+            "total_ms": 268.685
+        },
+        {
+            "request_id": 11,
+            "status_code": "504",
+            "conn_ms": 5.885,
+            "ttfb_ms": 402.502,
+            "total_ms": 402.639
+        },
+        {
+            "request_id": 12,
+            "status_code": "200",
+            "conn_ms": 5.357,
+            "ttfb_ms": 753.068,
+            "total_ms": 840.099
+        },
+        {
+            "request_id": 14,
+            "status_code": "200",
+            "conn_ms": 4.54,
+            "ttfb_ms": 781.9430000000001,
+            "total_ms": 964.08
+        },
+        {
+            "request_id": 7,
+            "status_code": "200",
+            "conn_ms": 3.767,
+            "ttfb_ms": 892.8679999999999,
+            "total_ms": 1158.984
+        },
+        {
+            "request_id": 1,
+            "status_code": "200",
+            "conn_ms": 6.357,
+            "ttfb_ms": 959.204,
+            "total_ms": 1190.791
+        },
+        {
+            "request_id": 19,
+            "status_code": "200",
+            "conn_ms": 4.111,
+            "ttfb_ms": 1079.7259999999999,
+            "total_ms": 1277.374
+        },
+        {
+            "request_id": 9,
+            "status_code": "200",
+            "conn_ms": 28.155,
+            "ttfb_ms": 1271.045,
+            "total_ms": 1499.384
+        },
+        {
+            "request_id": 21,
+            "status_code": "200",
+            "conn_ms": 4.91,
+            "ttfb_ms": 1061.7369999999999,
+            "total_ms": 1314.781
+        },
+        {
+            "request_id": 17,
+            "status_code": "200",
+            "conn_ms": 4.411,
+            "ttfb_ms": 1117.17,
+            "total_ms": 1381.0240000000001
+        },
+        {
+            "request_id": 16,
+            "status_code": "200",
+            "conn_ms": 3.925,
+            "ttfb_ms": 1268.934,
+            "total_ms": 1428.169
+        },
+        {
+            "request_id": 13,
+            "status_code": "200",
+            "conn_ms": 5.555,
+            "ttfb_ms": 1476.587,
+            "total_ms": 1526.273
+        }
+    ],
+    "prometheus_metrics": {
+        "memory_mb": [
+            {
+                "metric": {
+                    "pod": "envoy-default-eg-e41e7b31-6c7f946f96-vc8xg"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "58.015625"
+                    ],
+                    [
+                        1771881864,
+                        "58.015625"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "11.89453125"
+                    ],
+                    [
+                        1771881864,
+                        "11.89453125"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "large-sized-data-server--100mb-7464b68864-qx4wb"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "286.74609375"
+                    ],
+                    [
+                        1771881864,
+                        "286.74609375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-w7zt2"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "51.94921875"
+                    ],
+                    [
+                        1771881864,
+                        "51.94921875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "producer-74b7b9568f-5vljv"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "195.46484375"
+                    ],
+                    [
+                        1771881864,
+                        "195.46484375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "pst-pod-7cccd9887-cpz87"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "78.78125"
+                    ],
+                    [
+                        1771881864,
+                        "78.78125"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "rabbitmq-b597dd85c-rrbt7"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "139.25390625"
+                    ],
+                    [
+                        1771881864,
+                        "139.25390625"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "siena-pod-6cb59b7788-sjltt"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "443.14453125"
+                    ],
+                    [
+                        1771881864,
+                        "443.14453125"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "small-sized-data-server--1mb-7c4944b698-l6jgx"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "28.32421875"
+                    ],
+                    [
+                        1771881864,
+                        "28.32421875"
+                    ]
+                ]
+            }
+        ],
+        "cpu_usage": [
+            {
+                "metric": {
+                    "pod": "envoy-default-eg-e41e7b31-6c7f946f96-vc8xg"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.06218081150653313"
+                    ],
+                    [
+                        1771881864,
+                        "0.0609528719711377"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.003932636318375641"
+                    ],
+                    [
+                        1771881864,
+                        "0.003932636318375641"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "large-sized-data-server--100mb-7464b68864-qx4wb"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.0003263057019645416"
+                    ],
+                    [
+                        1771881864,
+                        "0.0003263057019645416"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-w7zt2"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.0003394856606226991"
+                    ],
+                    [
+                        1771881864,
+                        "0.0003501225462640254"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "producer-74b7b9568f-5vljv"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.08348387932455667"
+                    ],
+                    [
+                        1771881864,
+                        "0.08348387932455667"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "pst-pod-7cccd9887-cpz87"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.00505506537684702"
+                    ],
+                    [
+                        1771881864,
+                        "0.00505506537684702"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "rabbitmq-b597dd85c-rrbt7"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.05126697737865168"
+                    ],
+                    [
+                        1771881864,
+                        "0.05126697737865168"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "siena-pod-6cb59b7788-sjltt"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.0028510447378696344"
+                    ],
+                    [
+                        1771881864,
+                        "0.0027922163406063267"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "small-sized-data-server--1mb-7c4944b698-l6jgx"
+                },
+                "values": [
+                    [
+                        1771881863,
+                        "0.013674420973294495"
+                    ],
+                    [
+                        1771881864,
+                        "0.013674420973294495"
+                    ]
+                ]
+            }
+        ]
+    }
+}

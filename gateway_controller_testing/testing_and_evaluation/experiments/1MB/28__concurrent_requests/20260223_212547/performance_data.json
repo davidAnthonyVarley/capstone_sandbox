@@ -1,0 +1,483 @@
+{
+    "test_metadata": {
+        "timestamp": "20260223_212547",
+        "data_size": "1MB",
+        "concurrency": 28,
+        "success_rate": 0.1786,
+        "total_execution_ms": 996.22
+    },
+    "network_performance": [
+        {
+            "request_id": 6,
+            "status_code": "504",
+            "conn_ms": 4.805000000000001,
+            "ttfb_ms": 259.505,
+            "total_ms": 259.647
+        },
+        {
+            "request_id": 7,
+            "status_code": "504",
+            "conn_ms": 5.482,
+            "ttfb_ms": 309.172,
+            "total_ms": 309.31199999999995
+        },
+        {
+            "request_id": 8,
+            "status_code": "504",
+            "conn_ms": 4.5840000000000005,
+            "ttfb_ms": 286.576,
+            "total_ms": 286.695
+        },
+        {
+            "request_id": 11,
+            "status_code": "504",
+            "conn_ms": 4.944,
+            "ttfb_ms": 288.01300000000003,
+            "total_ms": 288.147
+        },
+        {
+            "request_id": 10,
+            "status_code": "504",
+            "conn_ms": 5.692,
+            "ttfb_ms": 251.34699999999998,
+            "total_ms": 251.46699999999998
+        },
+        {
+            "request_id": 4,
+            "status_code": "504",
+            "conn_ms": 5.927,
+            "ttfb_ms": 356.286,
+            "total_ms": 356.41499999999996
+        },
+        {
+            "request_id": 5,
+            "status_code": "504",
+            "conn_ms": 4.231999999999999,
+            "ttfb_ms": 352.477,
+            "total_ms": 352.64099999999996
+        },
+        {
+            "request_id": 18,
+            "status_code": "504",
+            "conn_ms": 4.794,
+            "ttfb_ms": 275.69100000000003,
+            "total_ms": 275.836
+        },
+        {
+            "request_id": 21,
+            "status_code": "504",
+            "conn_ms": 4.989999999999999,
+            "ttfb_ms": 239.21300000000002,
+            "total_ms": 239.37
+        },
+        {
+            "request_id": 16,
+            "status_code": "504",
+            "conn_ms": 4.558000000000001,
+            "ttfb_ms": 250.7,
+            "total_ms": 250.86799999999997
+        },
+        {
+            "request_id": 24,
+            "status_code": "504",
+            "conn_ms": 5.239,
+            "ttfb_ms": 245.946,
+            "total_ms": 246.096
+        },
+        {
+            "request_id": 19,
+            "status_code": "504",
+            "conn_ms": 4.166,
+            "ttfb_ms": 363.24600000000004,
+            "total_ms": 363.396
+        },
+        {
+            "request_id": 14,
+            "status_code": "504",
+            "conn_ms": 3.866,
+            "ttfb_ms": 414.294,
+            "total_ms": 414.44399999999996
+        },
+        {
+            "request_id": 27,
+            "status_code": "504",
+            "conn_ms": 3.675,
+            "ttfb_ms": 256.58599999999996,
+            "total_ms": 256.713
+        },
+        {
+            "request_id": 26,
+            "status_code": "504",
+            "conn_ms": 4.188,
+            "ttfb_ms": 253.94099999999997,
+            "total_ms": 254.079
+        },
+        {
+            "request_id": 15,
+            "status_code": "504",
+            "conn_ms": 3.555,
+            "ttfb_ms": 341.007,
+            "total_ms": 341.137
+        },
+        {
+            "request_id": 20,
+            "status_code": "504",
+            "conn_ms": 4.312,
+            "ttfb_ms": 331.677,
+            "total_ms": 331.82
+        },
+        {
+            "request_id": 17,
+            "status_code": "504",
+            "conn_ms": 4.75,
+            "ttfb_ms": 399.67,
+            "total_ms": 399.806
+        },
+        {
+            "request_id": 23,
+            "status_code": "504",
+            "conn_ms": 4.863,
+            "ttfb_ms": 288.897,
+            "total_ms": 289.03299999999996
+        },
+        {
+            "request_id": 12,
+            "status_code": "504",
+            "conn_ms": 5.8389999999999995,
+            "ttfb_ms": 449.248,
+            "total_ms": 449.356
+        },
+        {
+            "request_id": 28,
+            "status_code": "504",
+            "conn_ms": 4.7780000000000005,
+            "ttfb_ms": 245.979,
+            "total_ms": 246.113
+        },
+        {
+            "request_id": 25,
+            "status_code": "504",
+            "conn_ms": 5.098,
+            "ttfb_ms": 330.65,
+            "total_ms": 330.826
+        },
+        {
+            "request_id": 22,
+            "status_code": "504",
+            "conn_ms": 4.963,
+            "ttfb_ms": 299.26399999999995,
+            "total_ms": 299.41
+        },
+        {
+            "request_id": 1,
+            "status_code": "200",
+            "conn_ms": 3.9439999999999995,
+            "ttfb_ms": 674.7610000000001,
+            "total_ms": 722.211
+        },
+        {
+            "request_id": 3,
+            "status_code": "200",
+            "conn_ms": 4.939,
+            "ttfb_ms": 688.631,
+            "total_ms": 744.927
+        },
+        {
+            "request_id": 9,
+            "status_code": "200",
+            "conn_ms": 9.216999999999999,
+            "ttfb_ms": 788.755,
+            "total_ms": 873.548
+        },
+        {
+            "request_id": 2,
+            "status_code": "200",
+            "conn_ms": 4.739,
+            "ttfb_ms": 738.307,
+            "total_ms": 830.898
+        },
+        {
+            "request_id": 13,
+            "status_code": "200",
+            "conn_ms": 4.096,
+            "ttfb_ms": 743.282,
+            "total_ms": 820.941
+        }
+    ],
+    "prometheus_metrics": {
+        "memory_mb": [
+            {
+                "metric": {
+                    "pod": "envoy-default-eg-e41e7b31-6c7f946f96-vc8xg"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "58.07421875"
+                    ],
+                    [
+                        1771881948,
+                        "58.07421875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "11.84765625"
+                    ],
+                    [
+                        1771881948,
+                        "11.84765625"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "large-sized-data-server--100mb-7464b68864-qx4wb"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "286.74609375"
+                    ],
+                    [
+                        1771881948,
+                        "286.74609375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-w7zt2"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "51.94921875"
+                    ],
+                    [
+                        1771881948,
+                        "51.94921875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "producer-74b7b9568f-5vljv"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "202.32421875"
+                    ],
+                    [
+                        1771881948,
+                        "202.32421875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "pst-pod-7cccd9887-cpz87"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "79.2109375"
+                    ],
+                    [
+                        1771881948,
+                        "79.2109375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "rabbitmq-b597dd85c-rrbt7"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "125.05859375"
+                    ],
+                    [
+                        1771881948,
+                        "125.05859375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "siena-pod-6cb59b7788-sjltt"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "443.26171875"
+                    ],
+                    [
+                        1771881948,
+                        "443.26171875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "small-sized-data-server--1mb-7c4944b698-l6jgx"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "28.32421875"
+                    ],
+                    [
+                        1771881948,
+                        "28.32421875"
+                    ]
+                ]
+            }
+        ],
+        "cpu_usage": [
+            {
+                "metric": {
+                    "pod": "envoy-default-eg-e41e7b31-6c7f946f96-vc8xg"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.08014582536647545"
+                    ],
+                    [
+                        1771881948,
+                        "0.08014582536647545"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.006165728212454832"
+                    ],
+                    [
+                        1771881948,
+                        "0.006165728212454832"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "large-sized-data-server--100mb-7464b68864-qx4wb"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.00033765893530809075"
+                    ],
+                    [
+                        1771881948,
+                        "0.00033765893530809075"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-w7zt2"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.00032637681159420424"
+                    ],
+                    [
+                        1771881948,
+                        "0.00032637681159420424"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "producer-74b7b9568f-5vljv"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.0836400803285074"
+                    ],
+                    [
+                        1771881948,
+                        "0.0836400803285074"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "pst-pod-7cccd9887-cpz87"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.0063106293825893845"
+                    ],
+                    [
+                        1771881948,
+                        "0.0063106293825893845"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "rabbitmq-b597dd85c-rrbt7"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.03880548784433825"
+                    ],
+                    [
+                        1771881948,
+                        "0.03880548784433825"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "siena-pod-6cb59b7788-sjltt"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.003983541217293468"
+                    ],
+                    [
+                        1771881948,
+                        "0.003983541217293468"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "small-sized-data-server--1mb-7c4944b698-l6jgx"
+                },
+                "values": [
+                    [
+                        1771881947,
+                        "0.008300621001129084"
+                    ],
+                    [
+                        1771881948,
+                        "0.008300621001129084"
+                    ]
+                ]
+            }
+        ]
+    }
+}
