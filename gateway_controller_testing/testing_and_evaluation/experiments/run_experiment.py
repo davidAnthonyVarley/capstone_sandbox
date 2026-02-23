@@ -16,6 +16,7 @@ DATA_SIZE = sys.argv[2]
 
 GATEWAY_HOST = "192.168.59.109"
 PROM_URL = "http://localhost:9090/api/v1/query_range"
+# Regex to capture specific pods for analysis
 POD_REGEX = ".*(pst|sidecar|siena|producer|rabbit|small|medium|large).*"
 
 payload_dict = {
@@ -62,6 +63,7 @@ test_end_time = datetime.now(timezone.utc)
 total_runtime_ms = (time.perf_counter() - start_timer) * 1000
 
 # --- STEP 2: WAIT FOR PROMETHEUS SCRAPE ---
+# Wait to ensure metrics are ingested before querying
 print(f"Waiting 15s for Prometheus to collect metrics...")
 time.sleep(15)
 
@@ -69,23 +71,30 @@ time.sleep(15)
 def fetch_metrics(query):
     params = {
         "query": query,
-        # Change these lines in fetch_metrics:
-        "start": (test_start_time - timedelta(minutes=2)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "end": (test_end_time + timedelta(minutes=2)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "step": "5s"
+        # Narrow window to the exact duration of the load test
+        "start": test_start_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "end": test_end_time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "step": "1s" 
     }
     try:
-        r = requests.get(PROM_URL, params=params).json()
-        return r.get('data', {}).get('result', [])
-    except:
+        r = requests.get(PROM_URL, params=params)
+        r.raise_for_status()
+        return r.json().get('data', {}).get('result', [])
+    except Exception as e:
+        print(f"Error fetching metrics: {e}")
         return []
 
 print("Fetching CPU and Memory metrics...")
-mem_data = fetch_metrics(f'container_memory_working_set_bytes{{pod=~"{POD_REGEX}"}} / 1024 / 1024')
-cpu_data = fetch_metrics(f'rate(container_cpu_usage_seconds_total{{pod=~"{POD_REGEX}"}}[1m])')
+# Aggregating by pod to prevent duplicate container entries
+mem_query = f'sum(container_memory_working_set_bytes{{pod=~"{POD_REGEX}"}}) by (pod) / 1024 / 1024'
+cpu_query = f'sum(rate(container_cpu_usage_seconds_total{{pod=~"{POD_REGEX}"}}[1m])) by (pod)'
+
+mem_data = fetch_metrics(mem_query)
+cpu_data = fetch_metrics(cpu_query)
 
 # --- STEP 4: ORGANIZE AND SAVE ---
 timestamp_str = test_start_time.strftime("%Y%m%d_%H%M%S")
+# Uses folder structure: <DataSize>/<Concurrency>__concurrent_requests/<Timestamp>
 folder_path = os.path.join(DATA_SIZE, f"{CONCURRENCY_COUNT}__concurrent_requests", timestamp_str)
 os.makedirs(folder_path, exist_ok=True)
 
@@ -96,13 +105,13 @@ final_output = {
         "timestamp": timestamp_str,
         "data_size": DATA_SIZE,
         "concurrency": CONCURRENCY_COUNT,
-        "success_rate": float({successes})/float({CONCURRENCY_COUNT}),
+        "success_rate": round(successes / CONCURRENCY_COUNT, 4) if CONCURRENCY_COUNT > 0 else 0,
         "total_execution_ms": round(total_runtime_ms, 2)
     },
     "network_performance": detailed_results,
     "prometheus_metrics": {
         "memory_mb": mem_data,
-        "cpu_cores": cpu_data
+        "cpu_usage": cpu_data  # Changed to 'cpu_usage' to match report generator requirements
     }
 }
 
