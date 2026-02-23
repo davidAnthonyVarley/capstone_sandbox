@@ -17,7 +17,7 @@ DATA_SIZE = sys.argv[2]
 GATEWAY_HOST = "192.168.59.109"
 PROM_URL = "http://localhost:9090/api/v1/query_range"
 # Regex to capture specific pods for analysis
-POD_REGEX = ".*(pst|sidecar|siena|producer|rabbit|small|medium|large).*"
+POD_REGEX = ".*(envoy-default|pst|sidecar|siena|producer|rabbit|small|medium|large).*"
 
 payload_dict = {
     "delivery_mode": "lightweight_summary",
@@ -66,7 +66,7 @@ total_runtime_ms = (time.perf_counter() - start_timer) * 1000
 # Wait to ensure metrics are ingested before querying
 sleep_period = -1
 if (DATA_SIZE == "1MB"):
-    sleep_period = 8
+    sleep_period = 4
 elif (DATA_SIZE == "10MB"):
     sleep_period = 16
 elif (DATA_SIZE == "100MB"):

@@ -1,11 +1,11 @@
 # Define the experiment matrix
-$DataSizes = @("10MB")
-$ConcurrencyLevels = @(0, 1, 2, 3, 4, 5)
+$DataSizes = @("1MB")
 
 Write-Host "--- Starting Experiment Matrix ---" -ForegroundColor Cyan
 
 foreach ($size in $DataSizes) {
-    foreach ($level in $ConcurrencyLevels) {
+    $level = 0;
+    while ($level -lt 5) {
         Write-Host "Running: Size=$size, Concurrency=$level" -ForegroundColor Yellow
         
         # Call the Python script with arguments
@@ -13,6 +13,8 @@ foreach ($size in $DataSizes) {
         
         Write-Host "Iteration Complete. Cooling down for 5s..." -ForegroundColor DarkGray
         Start-Sleep -Seconds 5
+
+        $level++;
     }
 }
 

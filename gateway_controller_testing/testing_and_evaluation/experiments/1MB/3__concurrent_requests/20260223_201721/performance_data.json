@@ -1,77 +1,88 @@
 {
     "test_metadata": {
-        "timestamp": "20260223_164209",
+        "timestamp": "20260223_201721",
         "data_size": "1MB",
         "concurrency": 3,
         "success_rate": 1.0,
-        "total_execution_ms": 424.6
+        "total_execution_ms": 633.41
     },
     "network_performance": [
         {
-            "request_id": 1,
-            "status_code": "200",
-            "conn_ms": 4.922000000000001,
-            "ttfb_ms": 171.683,
-            "total_ms": 227.80100000000002
-        },
-        {
             "request_id": 3,
             "status_code": "200",
-            "conn_ms": 4.457,
-            "ttfb_ms": 237.65,
-            "total_ms": 329.10499999999996
+            "conn_ms": 7.515,
+            "ttfb_ms": 239.47299999999998,
+            "total_ms": 326.555
+        },
+        {
+            "request_id": 1,
+            "status_code": "200",
+            "conn_ms": 5.96,
+            "ttfb_ms": 372.645,
+            "total_ms": 477.703
         },
         {
             "request_id": 2,
             "status_code": "200",
-            "conn_ms": 4.67,
-            "ttfb_ms": 264.256,
-            "total_ms": 342.069
+            "conn_ms": 7.723,
+            "ttfb_ms": 343.569,
+            "total_ms": 482.714
         }
     ],
     "prometheus_metrics": {
         "memory_mb": [
             {
                 "metric": {
+                    "pod": "envoy-default-eg-e41e7b31-6c7f946f96-vc8xg"
+                },
+                "values": [
+                    [
+                        1771877841,
+                        "50.5234375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
                     "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "6.69140625"
+                        1771877841,
+                        "6.453125"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "large-sized-data-server--100mb-7464b68864-zrmzw"
+                    "pod": "large-sized-data-server--100mb-7464b68864-qx4wb"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "287.35546875"
+                        1771877841,
+                        "286.83203125"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "medium-sized-data-server--10mb-74c9cb477f-c7dwv"
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-w7zt2"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "38.15625"
+                        1771877841,
+                        "51.99609375"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "producer-74b7b9568f-r56qg"
+                    "pod": "producer-74b7b9568f-5vljv"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "51.44921875"
+                        1771877841,
+                        "58.640625"
                     ]
                 ]
             },
@@ -81,8 +92,8 @@
                 },
                 "values": [
                     [
-                        1771864929,
-                        "26.8671875"
+                        1771877841,
+                        "30.7421875"
                     ]
                 ]
             },
@@ -92,8 +103,8 @@
                 },
                 "values": [
                     [
-                        1771864929,
-                        "99.48828125"
+                        1771877841,
+                        "95.6015625"
                     ]
                 ]
             },
@@ -103,19 +114,19 @@
                 },
                 "values": [
                     [
-                        1771864929,
-                        "448.05859375"
+                        1771877841,
+                        "436.92578125"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "small-sized-data-server--1mb-7c4944b698-mzgxd"
+                    "pod": "small-sized-data-server--1mb-7c4944b698-l6jgx"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "26.69921875"
+                        1771877841,
+                        "28.37109375"
                     ]
                 ]
             }
@@ -123,45 +134,56 @@
         "cpu_usage": [
             {
                 "metric": {
+                    "pod": "envoy-default-eg-e41e7b31-6c7f946f96-vc8xg"
+                },
+                "values": [
+                    [
+                        1771877841,
+                        "0.009390570404319981"
+                    ]
+                ]
+            },
+            {
+                "metric": {
                     "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.00022902650659693144"
+                        1771877841,
+                        "0.00042155860094088775"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "large-sized-data-server--100mb-7464b68864-zrmzw"
+                    "pod": "large-sized-data-server--100mb-7464b68864-qx4wb"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.000300641123492607"
+                        1771877841,
+                        "0.0007036104718066707"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "medium-sized-data-server--10mb-74c9cb477f-c7dwv"
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-w7zt2"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.00030834495583448464"
+                        1771877841,
+                        "0.00030622981079833856"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "producer-74b7b9568f-r56qg"
+                    "pod": "producer-74b7b9568f-5vljv"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.003337843352691866"
+                        1771877841,
+                        "0.001861907243355906"
                     ]
                 ]
             },
@@ -171,8 +193,8 @@
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.0024874428707181706"
+                        1771877841,
+                        "0.0038848308777754744"
                     ]
                 ]
             },
@@ -182,8 +204,8 @@
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.00855306228245564"
+                        1771877841,
+                        "0.008901829510804688"
                     ]
                 ]
             },
@@ -193,19 +215,19 @@
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.0038272149412563587"
+                        1771877841,
+                        "0.004863105381442773"
                     ]
                 ]
             },
             {
                 "metric": {
-                    "pod": "small-sized-data-server--1mb-7c4944b698-mzgxd"
+                    "pod": "small-sized-data-server--1mb-7c4944b698-l6jgx"
                 },
                 "values": [
                     [
-                        1771864929,
-                        "0.0012117555057699686"
+                        1771877841,
+                        "0.000605029818942344"
                     ]
                 ]
             }
