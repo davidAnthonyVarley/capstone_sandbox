@@ -3,7 +3,7 @@
         "timestamp": "20260223_024607",
         "data_size": "1MB",
         "concurrency": 2,
-        "success_rate": "2/2",
+        "success_rate": 1.0,
         "total_execution_ms": 415.45
     },
     "network_performance": [

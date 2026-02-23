@@ -96,7 +96,7 @@ final_output = {
         "timestamp": timestamp_str,
         "data_size": DATA_SIZE,
         "concurrency": CONCURRENCY_COUNT,
-        "success_rate": f"{successes}/{CONCURRENCY_COUNT}",
+        "success_rate": float({successes})/float({CONCURRENCY_COUNT}),
         "total_execution_ms": round(total_runtime_ms, 2)
     },
     "network_performance": detailed_results,
