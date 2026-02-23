@@ -3,6 +3,20 @@ import json
 import pandas as pd
 import glob
 import numpy as np
+import re
+
+def get_clean_pod_name(raw_name):
+    """Maps ephemeral pod IDs (with hashes) to static group names based on substrings."""
+    low_name = raw_name.lower()
+    if "large" in low_name: return "large-server-100mb"
+    if "medium" in low_name: return "medium-server-10mb"
+    if "small" in low_name: return "small-server-1mb"
+    if "sidecar" in low_name: return "sidecar"
+    if "producer" in low_name: return "producer"
+    if "rabbit" in low_name: return "rabbitmq"
+    if "siena" in low_name: return "siena"
+    if "pst" in low_name: return "pst"
+    return "unknown"
 
 def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
     all_summary_data = []
@@ -21,20 +35,23 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
                 data = json.load(f)
                 meta = data.get('test_metadata', {})
                 prom_metrics = data.get('prometheus_metrics', {})
-                net_data = data.get('network_performance', []) #
+                net_data = data.get('network_performance', [])
                 
                 size_str = str(meta.get('data_size', '0'))
                 concurrency = int(meta.get('concurrency', 1))
+                # Extract success_rate from metadata
+                success_rate = float(meta.get('success_rate', 1.0))
                 
                 entry = {
                     "Data Size": size_str,
-                    "Concurrency": concurrency
+                    "Concurrency": concurrency,
+                    "Success_Rate": success_rate,
+                    "Error_Rate": 1.0 - success_rate # Calculate error rate
                 }
 
                 # --- STEP 1: NETWORK LATENCY EXTRACTION ---
                 if net_data:
                     net_df = pd.DataFrame(net_data)
-                    # Metrics: conn_ms, ttfb_ms, total_ms
                     for metric in ['conn_ms', 'ttfb_ms', 'total_ms']:
                         entry[f"Net_Avg_{metric}"] = net_df[metric].mean()
                         entry[f"Net_P95_{metric}"] = net_df[metric].quantile(0.95)
@@ -43,7 +60,10 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
                 for metric_type in ['cpu_usage', 'memory_mb']:
                     results = prom_metrics.get(metric_type, [])
                     for pod_result in results:
-                        pod_name = pod_result.get('metric', {}).get('pod', 'unknown')
+                        raw_pod_name = pod_result.get('metric', {}).get('pod', 'unknown')
+                        pod_name = get_clean_pod_name(raw_pod_name)
+                        all_pods.add(pod_name)
+
                         values = [float(v[1]) for v in pod_result.get('values', [])]
                         if values:
                             if metric_type == 'cpu_usage':
@@ -52,7 +72,6 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
                             else:
                                 entry[f"Mem_Avg_{pod_name}"] = np.mean(values)
                                 entry[f"Mem_P95_{pod_name}"] = np.percentile(values, 95)
-                            all_pods.add(pod_name)
 
                 all_summary_data.append(entry)
             except Exception as e:
@@ -68,7 +87,6 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
 
     # --- STEP 4: RATE OF GROWTH CALCULATIONS ---
     analysis_frames = []
-    # Include both Pod metrics and Network metrics in Rate calculations
     base_metrics = [c for c in df.columns if any(x in c for x in ["CPU_", "Mem_", "Net_"])]
     
     for size, group in df.groupby('Data Size', sort=False):
@@ -100,10 +118,7 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
         def create_chart(title, y_label, series_prefixes, position):
             chart = workbook.add_chart({'type': 'scatter', 'subtype': 'straight_with_markers'})
             has_data = False
-            
-            # This handles both pod-specific series and general network series
             for prefix in series_prefixes:
-                # If prefix is for pod metrics
                 if any(x in prefix for x in ["CPU_", "Mem_"]):
                     for pod in sorted(list(all_pods)):
                         col_name = f"{prefix}{pod}"
@@ -114,7 +129,6 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
                                 'values':     ['Summary', start_row, cols.index(col_name), end_row, cols.index(col_name)],
                             })
                             has_data = True
-                # If prefix is for network metrics
                 else:
                     if prefix in cols:
                         chart.add_series({
@@ -130,56 +144,27 @@ def generate_excel_report(output_file="Experiment_Results_Final.xlsx"):
                 chart.set_y_axis({'name': y_label})
                 ws.insert_chart(position, chart)
 
-        # --- NEW LATENCY CHARTS ---
-        # 1. Absolute P95 Latencies
-        create_chart("P95 Latency Scaling", "Time (ms)", 
-                     ["Net_P95_conn_ms", "Net_P95_ttfb_ms", "Net_P95_total_ms"], "B2")
-        
-        # 2. Rate of Growth for Total Latency
-        create_chart("Total Latency Growth Rate", "ms per extra Req", 
-                     ["Rate_Net_Avg_total_ms", "Rate_Net_P95_total_ms"], "J2")
+        # Latency Charts
+        create_chart("P95 Latency Scaling", "Time (ms)", ["Net_P95_conn_ms", "Net_P95_ttfb_ms", "Net_P95_total_ms"], "B2")
+        create_chart("Total Latency Growth Rate", "ms per extra Req", ["Rate_Net_Avg_total_ms", "Rate_Net_P95_total_ms"], "J2")
 
-        # --- POD RESOURCE CHARTS (Existing) ---
+        # Resource Charts
         create_chart("Mem P95 Rate of Change", "P95 MiB/Req", ["Rate_Mem_P95_"], "B18")
         create_chart("CPU P95 Rate of Change", "P95 Cores/Req", ["Rate_CPU_P95_"], "J18")
-
-        create_chart(
-            title="Absolute Average CPU Usage", 
-            y_label="Total Cores", 
-            series_prefixes=["CPU_Avg_"], 
-            position="B50"
-        )
         
-        # 2. Average CPU Rate of Change
-        # Shows the CPU cost in "Cores per Request" for each pod.
-        create_chart(
-            title="Average CPU Rate of Change", 
-            y_label="Cores per extra Req", 
-            series_prefixes=["Rate_CPU_Avg_"], 
-            position="J50"
-        )
-
-        # --- LATENCY ANALYSIS CHARTS ---
-        # 1. Absolute Average Latency Metrics
-        # Compares Avg Conn, TTFB, and Total Latency on one chart.
-        create_chart(
-            title="Average Latency Scaling", 
-            y_label="Time (ms)", 
-            series_prefixes=["Net_Avg_conn_ms", "Net_Avg_ttfb_ms", "Net_Avg_total_ms"], 
-            position="B66"
-        )
+        # CPU Absolute & Rate
+        create_chart("Absolute Average CPU Usage", "Total Cores", ["CPU_Avg_"], "B34")
+        create_chart("Average CPU Rate of Change", "Cores/Req", ["Rate_CPU_Avg_"], "J34")
         
-        # 2. Average Latency Rate of Change
-        # Shows the growth in latency (ms) for every additional concurrent request.
-        create_chart(
-            title="Avg Latency Growth Rate", 
-            y_label="ms per extra Req", 
-            series_prefixes=["Rate_Net_Avg_conn_ms", "Rate_Net_Avg_ttfb_ms", "Rate_Net_Avg_total_ms"], 
-            position="J66"
-        )
+        # Average Latency Scaling & Rate
+        create_chart("Average Latency Scaling", "Time (ms)", ["Net_Avg_conn_ms", "Net_Avg_ttfb_ms", "Net_Avg_total_ms"], "B50")
+        create_chart("Avg Latency Growth Rate", "ms/Req", ["Rate_Net_Avg_conn_ms", "Rate_Net_Avg_ttfb_ms", "Rate_Net_Avg_total_ms"], "J50")
+
+        # --- ERROR RATE CHART ---
+        create_chart("Error Rate Scaling", "Error % (0.0 - 1.0)", ["Error_Rate"], "B66")
 
     writer.close()
-    print(f"Report Generated with Network and Resource Metrics: {output_file}")
+    print(f"Report Generated with Error Rates and Clean Grouping: {output_file}")
 
 if __name__ == "__main__":
     generate_excel_report()

@@ -11,8 +11,8 @@ if len(sys.argv) < 3:
     print("Usage: python run_experiment.py <concurrency_count> <data_size>")
     sys.exit(1)
 
-CONCURRENCY_COUNT = 4#int(sys.argv[1])
-DATA_SIZE = "1MB" #sys.argv[2]
+CONCURRENCY_COUNT = int(sys.argv[1])
+DATA_SIZE = sys.argv[2]
 
 GATEWAY_HOST = "192.168.59.109"
 PROM_URL = "http://localhost:9090/api/v1/query_range"

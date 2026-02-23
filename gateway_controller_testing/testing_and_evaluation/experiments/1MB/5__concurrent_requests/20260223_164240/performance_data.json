@@ -1,0 +1,228 @@
+{
+    "test_metadata": {
+        "timestamp": "20260223_164240",
+        "data_size": "1MB",
+        "concurrency": 5,
+        "success_rate": 1.0,
+        "total_execution_ms": 787.16
+    },
+    "network_performance": [
+        {
+            "request_id": 1,
+            "status_code": "200",
+            "conn_ms": 9.155,
+            "ttfb_ms": 254.89000000000001,
+            "total_ms": 334.34000000000003
+        },
+        {
+            "request_id": 2,
+            "status_code": "200",
+            "conn_ms": 9.889,
+            "ttfb_ms": 325.805,
+            "total_ms": 410.014
+        },
+        {
+            "request_id": 4,
+            "status_code": "200",
+            "conn_ms": 5.6160000000000005,
+            "ttfb_ms": 426.27500000000003,
+            "total_ms": 498.692
+        },
+        {
+            "request_id": 5,
+            "status_code": "200",
+            "conn_ms": 5.131,
+            "ttfb_ms": 404.75100000000003,
+            "total_ms": 524.7570000000001
+        },
+        {
+            "request_id": 3,
+            "status_code": "200",
+            "conn_ms": 5.822,
+            "ttfb_ms": 477.76800000000003,
+            "total_ms": 552.613
+        }
+    ],
+    "prometheus_metrics": {
+        "memory_mb": [
+            {
+                "metric": {
+                    "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "6.9296875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "large-sized-data-server--100mb-7464b68864-zrmzw"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "287.35546875"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-c7dwv"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "38.15625"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "producer-74b7b9568f-r56qg"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "51.5234375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "pst-pod-7cccd9887-cpz87"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "27.06640625"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "rabbitmq-b597dd85c-rrbt7"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "99.6015625"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "siena-pod-6cb59b7788-sjltt"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "448.09375"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "small-sized-data-server--1mb-7c4944b698-mzgxd"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "26.71484375"
+                    ]
+                ]
+            }
+        ],
+        "cpu_usage": [
+            {
+                "metric": {
+                    "pod": "envoycbr-httpfilter-sidecar-865946576c-w97ct"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.0007758681696405978"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "large-sized-data-server--100mb-7464b68864-zrmzw"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.0002943241007757139"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "medium-sized-data-server--10mb-74c9cb477f-c7dwv"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.0002851997981373615"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "producer-74b7b9568f-r56qg"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.009755528950805418"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "pst-pod-7cccd9887-cpz87"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.0030968064728249868"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "rabbitmq-b597dd85c-rrbt7"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.013926218630538466"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "siena-pod-6cb59b7788-sjltt"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.004370309784275599"
+                    ]
+                ]
+            },
+            {
+                "metric": {
+                    "pod": "small-sized-data-server--1mb-7c4944b698-mzgxd"
+                },
+                "values": [
+                    [
+                        1771864960,
+                        "0.0031472983824710346"
+                    ]
+                ]
+            }
+        ]
+    }
+}
