@@ -2,7 +2,7 @@
 $GATEWAY_HOST = (minikube ip);
 
 
-$JSON_PAYLOAD = '{ \"delivery_mode\": \"lightweight_summary\", \"include_metadata\": \"false\", \"data_size\": \"1MB\", \"note\": \"Triggers 1MB response\" }';
+$JSON_PAYLOAD = '{ \"delivery_mode\": \"lightweight_summary\", \"include_metadata\": \"false\", \"data_size\": \"100MB\", \"note\": \"Triggers 1MB response\" }';
 
 Write-Host "--- Starting High-Precision Request ---" -ForegroundColor Cyan
 

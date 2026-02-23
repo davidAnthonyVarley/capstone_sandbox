@@ -25,10 +25,3 @@ spec:
         - file:
             path: /dev/stdout
           type: File
-    tracing:
-      provider:
-        type: OpenTelemetry
-        backendRefs:
-        - name: jaeger-collector
-          namespace: default
-          port: 4317

@@ -3,14 +3,18 @@ import threading
 import time
 import json
 import re
-import os
+import os, sys
 import requests
 from datetime import datetime, timezone, timedelta
 
-# --- CONFIGURATION ---
-CONCURRENCY_COUNT = 20
+if len(sys.argv) < 3:
+    print("Usage: python run_experiment.py <concurrency_count> <data_size>")
+    sys.exit(1)
+
+CONCURRENCY_COUNT = int(sys.argv[1])
+DATA_SIZE = sys.argv[2]
+
 GATEWAY_HOST = "192.168.59.109"
-DATA_SIZE = "1MB"
 PROM_URL = "http://localhost:9090/api/v1/query_range"
 POD_REGEX = ".*(pst|sidecar|siena|producer|rabbit|small|medium|large).*"
 
@@ -58,8 +62,8 @@ test_end_time = datetime.now(timezone.utc)
 total_runtime_ms = (time.perf_counter() - start_timer) * 1000
 
 # --- STEP 2: WAIT FOR PROMETHEUS SCRAPE ---
-print(f"Waiting 30s for Prometheus to collect metrics...")
-time.sleep(30)
+print(f"Waiting 15s for Prometheus to collect metrics...")
+time.sleep(15)
 
 # --- STEP 3: QUERY PROMETHEUS ---
 def fetch_metrics(query):
@@ -82,7 +86,7 @@ cpu_data = fetch_metrics(f'rate(container_cpu_usage_seconds_total{{pod=~"{POD_RE
 
 # --- STEP 4: ORGANIZE AND SAVE ---
 timestamp_str = test_start_time.strftime("%Y%m%d_%H%M%S")
-folder_path = os.path.join(DATA_SIZE, str(CONCURRENCY_COUNT), timestamp_str)
+folder_path = os.path.join(DATA_SIZE, f"{CONCURRENCY_COUNT}__concurrent_requests", timestamp_str)
 os.makedirs(folder_path, exist_ok=True)
 
 successes = sum(1 for r in detailed_results if r.get("status_code") == "200")
