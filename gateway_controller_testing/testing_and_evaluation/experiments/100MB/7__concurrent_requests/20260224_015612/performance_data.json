@@ -1,0 +1,64 @@
+{
+    "test_metadata": {
+        "timestamp": "20260224_015612",
+        "data_size": "100MB",
+        "concurrency": 7,
+        "success_rate": 0.1429,
+        "total_execution_ms": 16038.17
+    },
+    "network_performance": [
+        {
+            "request_id": 3,
+            "status_code": "504",
+            "conn_ms": 5.359,
+            "ttfb_ms": 15781.938,
+            "total_ms": 15798.713
+        },
+        {
+            "request_id": 6,
+            "status_code": "504",
+            "conn_ms": 5.337,
+            "ttfb_ms": 15781.888,
+            "total_ms": 15798.691
+        },
+        {
+            "request_id": 1,
+            "status_code": "200",
+            "conn_ms": 8.501,
+            "ttfb_ms": 5840.81,
+            "total_ms": 15804.516
+        },
+        {
+            "request_id": 2,
+            "status_code": "504",
+            "conn_ms": 5.333,
+            "ttfb_ms": 15884.485,
+            "total_ms": 15890.496000000001
+        },
+        {
+            "request_id": 5,
+            "status_code": "504",
+            "conn_ms": 5.213,
+            "ttfb_ms": 15885.486,
+            "total_ms": 15886.792
+        },
+        {
+            "request_id": 7,
+            "status_code": "504",
+            "conn_ms": 4.6579999999999995,
+            "ttfb_ms": 15881.223,
+            "total_ms": 15891.839
+        },
+        {
+            "request_id": 4,
+            "status_code": "504",
+            "conn_ms": 4.672,
+            "ttfb_ms": 15872.042000000001,
+            "total_ms": 15875.475
+        }
+    ],
+    "prometheus_metrics": {
+        "memory_mb": [],
+        "cpu_usage": []
+    }
+}

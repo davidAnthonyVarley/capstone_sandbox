@@ -70,7 +70,7 @@ if (DATA_SIZE == "1MB"):
 elif (DATA_SIZE == "10MB"):
     sleep_period = 16
 elif (DATA_SIZE == "100MB"):
-    sleep_period = 35
+    sleep_period = 45
 
 print(f"Waiting {sleep_period}s for Prometheus to collect metrics...")
 time.sleep(sleep_period)

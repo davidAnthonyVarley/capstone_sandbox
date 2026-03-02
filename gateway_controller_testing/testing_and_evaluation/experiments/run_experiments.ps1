@@ -1,5 +1,5 @@
 # Define the experiment matrix
-$DataSizes = @("10MB")
+$DataSizes = @("100MB")
 
 Write-Host "--- Starting Experiment Matrix ---" -ForegroundColor Cyan
 
