@@ -1,17 +1,14 @@
+
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyExtensionPolicy
 metadata:
   name: envoy-httpfilter
   namespace: default
 spec:
-
-#right now, this extension policy applies to all traffic coming through the gateway. but we don't necessarily want all of that traffic to have this filter applied. We need to specify which httproute (and thus sytem/application) we want to be affected by this
   targetRefs:
-#the group is an "API family". many different APIs in K8s serve wildly different purposes so we want to decouple them where possible    
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
       name: cbr-httproute
-#the internal envoy filter name for extProc == "envoy.filters.http.ext_proc", but that doesn't work here
   extProc:
     - backendRefs:
         - name: envoycbr-httpfilter-sidecar-service
@@ -21,5 +18,3 @@ spec:
           attributes: 
             - "source.address"
             - "request.path"
-        #response: 
-        #  body: Streamed 

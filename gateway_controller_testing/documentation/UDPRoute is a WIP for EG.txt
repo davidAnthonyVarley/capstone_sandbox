@@ -18,5 +18,6 @@ Defaulted container "envoy" out of: envoy, shutdown-manager
 
 
 [2026-01-03 13:50:21.495][1][warning][misc] [source/common/protobuf/message_validator_impl.cc:39] field 'envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.matcher' is marked as work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the threat model, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
+
 [2026-01-03 13:53:05.696][1][warning][misc] [source/common/protobuf/message_validator_impl.cc:39] field 'envoy.extensions.filters.udp.udp_proxy.v3.UdpProxyConfig.matcher' is marked as work-in-progress. API features marked as work-in-progress are not considered stable, are not covered by the threat model, are not supported by the security team, and are subject to breaking changes. Do not use this feature without understanding each of the previous points.
 C:\Users\david>

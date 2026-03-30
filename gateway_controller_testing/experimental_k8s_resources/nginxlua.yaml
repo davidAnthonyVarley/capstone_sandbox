@@ -1,0 +1,22 @@
+apiVersion: gateway.nginx.org/v1alpha1
+kind: NGINXExtension
+metadata:
+  name: stateful-cbr-logic
+spec:
+  lua:
+    content: |
+      -- Benchmark 7: Stateful/Deep Inspection
+      local content_type = ngx.req.get_headers()["content-type"]
+
+      -- Benchmark 3: Custom Logic
+      if content_type == "application/x-quic-stream" then
+          ngx.req.set_header("x-cbr-processor", "gpu-accelerated-node")
+          
+          -- Benchmark 4: Accessing a simple stateful structure
+          -- We use ngx.shared for global state tracking
+          local stats = ngx.shared.gateway_stats
+          if stats then
+              local new_val, err = stats:incr("global_hits", 1, 0)
+              -- 'new_val' now holds the incremented global count
+          end
+      end
