@@ -22,7 +22,7 @@ spec:
             claimName: testing-data-pvc
       containers:
       - name: subscriber-pod
-        image: davidAnthonyVarley/subscriber-pod:latest
+        image: davidanthonyvarley/subscriber-pod:latest
 
         command: ["python3"]
         args:

@@ -19,7 +19,7 @@ spec:
             secretName: example-cert
       containers:
       - name: pst-pod
-        image: davidAnthonyVarley/pst-pod:latest
+        image: davidanthonyvarley/pst-pod:latest
 
         command: ["java", "Server"]
         volumeMounts:

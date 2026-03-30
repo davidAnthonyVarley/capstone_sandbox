@@ -1,1 +1,1 @@
-docker build -t davidAnthonyVarley/subscriber-pod:latest .
+docker build -t davidanthonyvarley/subscriber-pod:latest .

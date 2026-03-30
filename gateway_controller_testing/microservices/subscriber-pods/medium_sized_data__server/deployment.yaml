@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: subscriber
-        image: davidAnthonyVarley/medium-sized-data-server--10mb:latest 
+        image: davidanthonyvarley/medium-sized-data-server--10mb:latest 
         imagePullPolicy: IfNotPresent
         env:
         - name: SUB_ID

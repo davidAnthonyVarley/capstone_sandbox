@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: producer
-        image: davidAnthonyVarley/producer-proxy:latest
+        image: davidanthonyvarley/producer-proxy:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

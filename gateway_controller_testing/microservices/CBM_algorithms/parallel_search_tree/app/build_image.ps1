@@ -1,1 +1,1 @@
-docker build -t davidAnthonyVarley/pst-pod:latest .
+docker build -t davidanthonyvarley/pst-pod:latest .

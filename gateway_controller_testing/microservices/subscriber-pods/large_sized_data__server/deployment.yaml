@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: subscriber
-        image: davidAnthonyVarley/large-sized-data-server--100mb:latest # The image from your Dockerfile [cite: 1]
+        image: davidanthonyvarley/large-sized-data-server--100mb:latest # The image from your Dockerfile [cite: 1]
         imagePullPolicy: IfNotPresent
         env:
         - name: SUB_ID

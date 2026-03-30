@@ -1,1 +1,1 @@
-docker build -t davidAnthonyVarley/envoy-ext-proc:latest .
+docker build -t davidanthonyvarley/envoy-ext-proc:latest .

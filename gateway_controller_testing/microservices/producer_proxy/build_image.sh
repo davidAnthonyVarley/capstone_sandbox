@@ -1,1 +1,1 @@
-docker build -t davidAnthonyVarley/producer-proxy:latest .
+docker build -t davidanthonyvarley/producer-proxy:latest .

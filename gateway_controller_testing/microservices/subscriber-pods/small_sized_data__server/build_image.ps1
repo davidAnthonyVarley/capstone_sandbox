@@ -1,1 +1,1 @@
-docker build -t davidAnthonyVarley/small-sized-data-server--1mb:latest .;
+docker build -t davidanthonyvarley/small-sized-data-server--1mb:latest .;
