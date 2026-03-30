@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: large-sized-data-server--100mb
+  name: large-sized-data-server-100mb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: large-sized-data-server--100mb
+      app: large-sized-data-server-100mb
   template:
     metadata:
       labels:
-        app: large-sized-data-server--100mb
+        app: large-sized-data-server-100mb
     spec:
       containers:
       - name: subscriber
-        image: davidanthonyvarley/large-sized-data-server--100mb:latest # The image from your Dockerfile [cite: 1]
+        image: davidanthonyvarley/large-sized-data-server-100mb:latest # The image from your Dockerfile [cite: 1]
         imagePullPolicy: IfNotPresent
         env:
         - name: SUB_ID

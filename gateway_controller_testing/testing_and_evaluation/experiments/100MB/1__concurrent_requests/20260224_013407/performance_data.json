@@ -105,7 +105,7 @@
             },
             {
                 "metric": {
-                    "pod": "large-sized-data-server--100mb-7464b68864-klbnr"
+                    "pod": "large-sized-data-server-100mb-7464b68864-klbnr"
                 },
                 "values": [
                     [
@@ -148,7 +148,7 @@
             },
             {
                 "metric": {
-                    "pod": "medium-sized-data-server--10mb-74c9cb477f-7j8jd"
+                    "pod": "medium-sized-data-server-10mb-74c9cb477f-7j8jd"
                 },
                 "values": [
                     [
@@ -363,7 +363,7 @@
             },
             {
                 "metric": {
-                    "pod": "small-sized-data-server--1mb-7c4944b698-jg5pb"
+                    "pod": "small-sized-data-server-1mb-7c4944b698-jg5pb"
                 },
                 "values": [
                     [
@@ -494,7 +494,7 @@
             },
             {
                 "metric": {
-                    "pod": "large-sized-data-server--100mb-7464b68864-klbnr"
+                    "pod": "large-sized-data-server-100mb-7464b68864-klbnr"
                 },
                 "values": [
                     [
@@ -537,7 +537,7 @@
             },
             {
                 "metric": {
-                    "pod": "medium-sized-data-server--10mb-74c9cb477f-7j8jd"
+                    "pod": "medium-sized-data-server-10mb-74c9cb477f-7j8jd"
                 },
                 "values": [
                     [
@@ -752,7 +752,7 @@
             },
             {
                 "metric": {
-                    "pod": "small-sized-data-server--1mb-7c4944b698-jg5pb"
+                    "pod": "small-sized-data-server-1mb-7c4944b698-jg5pb"
                 },
                 "values": [
                     [

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: medium-sized-data-server--10mb
+  name: medium-sized-data-server-10mb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: medium-sized-data-server--10mb
+      app: medium-sized-data-server-10mb
   template:
     metadata:
       labels:
-        app: medium-sized-data-server--10mb
+        app: medium-sized-data-server-10mb
     spec:
       containers:
       - name: subscriber
-        image: davidanthonyvarley/medium-sized-data-server--10mb:latest 
+        image: davidanthonyvarley/medium-sized-data-server-10mb:latest 
         imagePullPolicy: IfNotPresent
         env:
         - name: SUB_ID

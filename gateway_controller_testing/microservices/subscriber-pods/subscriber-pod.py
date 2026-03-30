@@ -14,11 +14,11 @@ CACHED_FILE_DATA = None
 def load_data_to_memory():
     global CACHED_FILE_DATA
     file_path = "TBD"
-    if (SUB_ID == "small-sized-data-server--1mb"):
+    if (SUB_ID == "small-sized-data-server-1mb"):
         file_path = "/mnt/testing-data/1mb_test.bin"
-    elif (SUB_ID == "medium-sized-data-server--10mb"):
+    elif (SUB_ID == "medium-sized-data-server-10mb"):
         file_path = "/mnt/testing-data/10mb_test.bin"
-    elif (SUB_ID == "large-sized-data-server--10mb"):
+    elif (SUB_ID == "large-sized-data-server-10mb"):
         file_path = "/mnt/testing-data/100mb_test.bin"
     else:
         print("*")

@@ -12,5 +12,5 @@ spec:
     protocol: TCP
     targetPort: 3000
   selector:
-    app: large-sized-data-server--100mb
+    app: large-sized-data-server-100mb
   type: ClusterIP

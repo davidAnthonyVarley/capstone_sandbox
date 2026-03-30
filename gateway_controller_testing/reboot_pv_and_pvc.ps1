@@ -1,6 +1,6 @@
-kubectl delete deployment small-sized-data-server--1mb;
-kubectl delete deployment medium-sized-data-server--10mb;
-kubectl delete deployment large-sized-data-server--100mb;
+kubectl delete deployment small-sized-data-server-1mb;
+kubectl delete deployment medium-sized-data-server-10mb;
+kubectl delete deployment large-sized-data-server-100mb;
 kubectl delete pv testing-data-pv;
 kubectl delete pvc testing-data-pvc;
 
